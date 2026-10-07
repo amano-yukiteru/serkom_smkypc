@@ -10,16 +10,19 @@
         <x-ui.breadcrumb :items="[['label' => 'Berita']]" />
 
         {{-- HEADER --}}
-        <div class="flex items-center justify-between gap-4">
-            <div class="min-w-0">
-                <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">Data Berita</h1>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kelola berita sekolah di sini.</p>
+        <x-ui.card :padding="false">
+            <div class="flex items-center justify-between gap-4 px-5 py-4">
+                <div class="min-w-0">
+                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">Data Berita</h1>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kelola berita sekolah di sini.</p>
+                </div>
+    
+                <x-ui.button href="{{ route('berita.create') }}" startIcon="plus" class="!w-auto shrink-0">
+                    Tambah Berita
+                </x-ui.button>
             </div>
+        </x-ui.card>
 
-            <x-ui.button href="{{ route('berita.create') }}" startIcon="plus" class="!w-auto shrink-0">
-                Tambah Berita
-            </x-ui.button>
-        </div>
 
         {{-- FILTER --}}
         <x-ui.card :padding="false">
