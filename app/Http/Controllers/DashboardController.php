@@ -13,24 +13,71 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Statistik
-        $totalSiswa  = Siswa::count();
-        $totalGuru   = Guru::count();
-        $totalBerita = Berita::count();
-        $totalGaleri = Galeri::count();
-        $totalEskul  = Ekstrakurikuler::count();
+        // Profil sekolah (single record)
+        $profil = ProfilSekolah::first();
 
-        // Berita terbaru (4 item)
+        // Statistik
+        $totalSiswa = Siswa::count();
+        $totalGuru = Guru::count();
+        $totalEskul = Ekstrakurikuler::count();
+
+        // Berita terbaru (3 item)
         $beritaTerbaru = Berita::query()
             ->with('user:id,name')
             ->orderBy('tanggal', 'desc')
             ->limit(3)
             ->get();
 
-        // Ekstrakurikuler (5 item terbaru)
+        // Ekstrakurikuler (4 item)
         $ekstrakurikuler = Ekstrakurikuler::query()
             ->latest('id')
+            ->limit(4)
+            ->get();
+
+        // Galeri (8 item)
+        $galeris = Galeri::query()
+            ->latest('id')
+            ->limit(8)
+            ->get();
+
+        // Guru (5 item)
+        $gurus = Guru::query()
+            ->latest('id')
             ->limit(5)
+            ->get();
+
+        return view('pages.company_profile.index', compact(
+            'profil',
+            'totalSiswa',
+            'totalGuru',
+            'totalEskul',
+            'beritaTerbaru',
+            'ekstrakurikuler',
+            'galeris',
+            'gurus',
+        ));
+    }
+
+    public function admin()
+    {
+        // Statistik
+        $totalSiswa = Siswa::count();
+        $totalGuru = Guru::count();
+        $totalBerita = Berita::count();
+        $totalGaleri = Galeri::count();
+        $totalEskul = Ekstrakurikuler::count();
+
+        // Berita terbaru (3 item)
+        $beritaTerbaru = Berita::query()
+            ->with('user:id,name')
+            ->orderBy('tanggal', 'desc')
+            ->limit(3)
+            ->get();
+
+        // Ekstrakurikuler (3 item terbaru)
+        $ekstrakurikuler = Ekstrakurikuler::query()
+            ->latest('id')
+            ->limit(3)
             ->get();
 
         // Profil sekolah
@@ -46,10 +93,5 @@ class DashboardController extends Controller
             'ekstrakurikuler',
             'profil',
         ));
-    }
-
-    public function show()
-    {
-        return view('pages.dashboard.show');
     }
 }

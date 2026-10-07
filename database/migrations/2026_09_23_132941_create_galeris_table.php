@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('galeris', function (Blueprint $table) {
             $table->id();
             $table->string('judul', 50);
-            $table->text('keteranga');
+            $table->text('keterangan');
             $table->string('file', 225);
             $table->enum('kategori',['Foto', 'Video'])->default('Foto');
             $table->timestamps();

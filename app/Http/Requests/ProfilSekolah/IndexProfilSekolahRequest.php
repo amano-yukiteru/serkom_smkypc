@@ -11,17 +11,15 @@ class IndexProfilSekolahRequest extends FormRequest
         return true;
     }
 
+        /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
             'search' => 'nullable|string|max:100',
         ];
     }
-
-    // public function messages(): array
-    // {
-    //     return [
-    //         'search.max' => 'Kata kunci maksimal 100 karakter.',
-    //     ];
-    // }
 }

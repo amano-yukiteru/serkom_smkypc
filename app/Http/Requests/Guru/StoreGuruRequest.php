@@ -20,34 +20,4 @@ class StoreGuruRequest extends FormRequest
             'foto'      => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ];
     }
-
-    // public function messages(): array
-    // {
-    //     return [
-    //         'nama_guru.required' => 'Nama guru wajib diisi.',
-    //         'nama_guru.max'      => 'Nama guru maksimal 60 karakter.',
-
-    //         'nip.required'       => 'NIP wajib diisi.',
-    //         'nip.digits'         => 'NIP harus 18 digit angka.',
-    //         'nip.unique'         => 'NIP sudah terdaftar.',
-
-    //         'mapel.required'     => 'Mata pelajaran wajib diisi.',
-    //         'mapel.max'          => 'Mata pelajaran maksimal 40 karakter.',
-
-    //         'foto.required'      => 'Foto wajib diunggah.',
-    //         'foto.image'         => 'Foto harus berupa gambar.',
-    //         'foto.mimes'         => 'Foto harus berformat jpg, jpeg, png, atau webp.',
-    //         'foto.max'           => 'Ukuran foto maksimal 2MB.',
-    //     ];
-    // }
-
-    // public function attributes(): array
-    // {
-    //     return [
-    //         'nama_guru' => 'Nama Guru',
-    //         'nip'       => 'NIP',
-    //         'mapel'     => 'Mata Pelajaran',
-    //         'foto'      => 'Foto',
-    //     ];
-    // }
 }

@@ -9,12 +9,14 @@
             <li class="inline-flex items-center">
                 <a href="{{ url('/dashboard') }}"
                    class="flex items-center gap-1 text-gray-500 transition hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400">
-                    <svg class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="none">
+                    {{-- <svg class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="none">
                         <path d="M3 8l7-5 7 5v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"
                               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M8 18v-5h4v5"
                               stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    </svg> --}}
+                    <i class="fa-solid fa-house text-lg"></i>
+
                     <span class="hidden sm:inline">Dashboard</span>
                 </a>
             </li>

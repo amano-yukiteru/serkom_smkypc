@@ -13,6 +13,11 @@ class StoreUserRequest extends FormRequest
         return true;
     }
 
+        /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
@@ -22,17 +27,4 @@ class StoreUserRequest extends FormRequest
             'role'     => 'required|in:Admin,Oprator',
         ];
     }
-
-    // public function messages(): array
-    // {
-    //     return [
-    //         'username.required' => 'Username wajib diisi.',
-    //         'username.max'      => 'Username maksimal 30 karakter.',
-    //         'username.unique'   => 'Username sudah dipakai.',
-    //         'password.required' => 'Password wajib diisi.',
-    //         'password.min'      => 'Password minimal 6 karakter.',
-    //         'role.required'     => 'Role wajib dipilih.',
-    //         'role.in'           => 'Role tidak valid.',
-    //     ];
-    // }
 }

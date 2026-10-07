@@ -3,12 +3,20 @@
 @section('title', 'Dashboard')
 
 @php use Illuminate\Support\Facades\Storage; @endphp
+@php
+    $icons = [
+        'siswa' => '<i class="fa-solid fa-users text-lg"></i>',
+        'guru'  => '<i class="fa-solid fa-chalkboard-user text-lg"></i>',
+        'berita'=> '<i class="fa-solid fa-newspaper text-lg"></i>',
+        'eskul' => '<i class="fa-solid fa-trophy text-lg"></i>',
+    ];
+@endphp
 
 @section('content')
     <div class="space-y-5">
 
         {{-- BANNER SELAMAT DATANG --}}
-        <div class="flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-[#0f0194] via-[#0025c9] to-[#1E90D6] px-10 py-15 opacity-90 dark:from-[#02000f] dark:via-[#1d295c] dark:to-[#000000]">
+        <div class="flex items-center justify-between gap-4 rounded-2xl bg-gradient-to-br from-[#0f0194] via-[#0025c9] to-[#1E90D6] px-10 py-15 opacity-90 dark:from-[#02000f] dark:via-[#220965] dark:to-[#000000]">
             <div class="min-w-0">
                 <h1 class="text-4xl font-bold text-white/90">
                     Selamat Datang <strong class="font-bold">{{ auth()->user()->name }}</strong>
@@ -22,33 +30,56 @@
         {{-- STAT CARDS --}}
         <x-ui.stat-grid :cols="4">
 
-            <x-ui.stat-card
-                size="lg"
+            <x-ui.stat-card 
+                size="lg" 
                 label="Total Siswa"
-                {{-- color="blue" --}}
-                :value="number_format($totalSiswa ?? 0)"
-            />
+                :icon="$icons['siswa']"
+                :value="number_format($totalSiswa ?? 0)" />
 
-            <x-ui.stat-card
-                size="lg"
-                {{-- color="purple" --}}
+            <x-ui.stat-card 
+                size="lg" 
                 label="Total Guru"
-                :value="number_format($totalGuru ?? 0)"
-            />
+                :icon="$icons['guru']"
+                :value="number_format($totalGuru ?? 0)" />
 
-            <x-ui.stat-card
-                size="lg"
+            <x-ui.stat-card 
+                size="lg" 
                 label="Total Berita"
-                :value="number_format($totalBerita ?? 0)"
-                {{-- color="amber" --}}
-            />
+                :icon="$icons['berita']"
+                :value="number_format($totalBerita ?? 0)" />
 
-            <x-ui.stat-card
-                size="lg"
+            <x-ui.stat-card 
+                size="lg" 
                 label="Total Eskul"
-                {{-- color="emerald" --}}
-                :value="number_format($totalEskul ?? 0)"
-            />
+                :icon="$icons['eskul']"
+                :value="number_format($totalEskul ?? 0)" />
+
+        </x-ui.stat-grid>
+        <x-ui.stat-grid :cols="4">
+
+            <x-ui.stat-card 
+                size="lg" 
+                label="Total Siswa"
+                :icon="$icons['siswa']"
+                :value="number_format($totalSiswa ?? 0)" />
+
+            <x-ui.stat-card 
+                size="lg" 
+                label="Total Guru"
+                :icon="$icons['guru']"
+                :value="number_format($totalGuru ?? 0)" />
+
+            <x-ui.stat-card 
+                size="lg" 
+                label="Total Berita"
+                :icon="$icons['berita']"
+                :value="number_format($totalBerita ?? 0)" />
+
+            <x-ui.stat-card 
+                size="lg" 
+                label="Total Eskul"
+                :icon="$icons['eskul']"
+                :value="number_format($totalEskul ?? 0)" />
 
         </x-ui.stat-grid>
 

@@ -22,12 +22,11 @@ class GaleriController extends Controller
         $perPage = $validated['per_page'] ?? 9;
 
         $galeris = Galeri::query()
-            ->when($search, function ($q) use ($search) {
-                $q->where(function ($qq) use ($search) {
-                    $qq->where('judul', 'like', "%{$search}%")
-                        ->orWhere('keteranga', 'like', "%{$search}%");
-                });
-            })
+            ->when($search, fn ($q) => $q->whereAny(
+                ['judul', 'keterangan'],
+                'like',
+                "%{$search}%"
+            ))
             ->when($kategori, fn ($q) => $q->where('kategori', $kategori))
             ->orderBy($sort, $order)
             ->paginate($perPage)
@@ -46,7 +45,13 @@ class GaleriController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('file')) {
-            $data['file'] = $request->file('file')->store('galeri', 'public');
+            $file = $request->file('file');
+
+            $data['kategori'] = str_starts_with($file->getMimeType(), 'video/')
+                ? 'Video'
+                : 'Foto';
+
+            $data['file'] = $file->store('galeri', 'public');
         }
 
         Galeri::create($data);
@@ -58,43 +63,47 @@ class GaleriController extends Controller
 
     public function show(string $encryptedId)
     {
-        // $galeri = $this->findByEncrypted($encryptedId);
-
-        // return view('pages.crud.galeri.show', compact('galeri'));
+        //
     }
 
     public function edit(string $encryptedId)
     {
-        $galeri = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $galeri = Galeri::findOrFail($id);
 
         return view('pages.crud.galeri.edit', compact('galeri'));
     }
 
     public function update(UpdateGaleriRequest $request, string $encryptedId)
     {
-        $galeri = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $galeri = Galeri::findOrFail($id);
         $data = $request->validated();
 
-        // Kalau upload file baru → hapus lama, simpan baru
         if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
             if ($galeri->file) {
                 Storage::disk('public')->delete($galeri->file);
             }
-            $data['file'] = $request->file('file')->store('galeri', 'public');
+
+            $data['kategori'] = str_starts_with($file->getMimeType(), 'video/')
+                ? 'Video'
+                : 'Foto';
+
+            $data['file'] = $file->store('galeri', 'public');
         }
 
         $galeri->update($data);
 
-        return redirect()
-            ->route('galeri.index')
-            ->with('success', 'Galeri berhasil diperbarui.');
+        return redirect()->route('galeri.index')->with('success', 'Galeri berhasil diperbarui.');
     }
 
     public function destroy(string $encryptedId)
     {
-        $galeri = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $galeri = Galeri::findOrFail($id);
 
-        // Hapus file dari storage
         if ($galeri->file) {
             Storage::disk('public')->delete($galeri->file);
         }
@@ -102,19 +111,6 @@ class GaleriController extends Controller
         $judul = $galeri->judul;
         $galeri->delete();
 
-        return redirect()
-            ->route('galeri.index')
-            ->with('success', 'Galeri "'.$judul.'" berhasil dihapus.');
-    }
-
-    private function findByEncrypted(string $encryptedId): Galeri
-    {
-        try {
-            $id = Crypt::decrypt($encryptedId);
-        } catch (\Throwable $e) {
-            abort(404);
-        }
-
-        return Galeri::findOrFail($id);
+        return redirect()->route('galeri.index')->with('success', 'Galeri "'.$judul.'" berhasil dihapus.');
     }
 }

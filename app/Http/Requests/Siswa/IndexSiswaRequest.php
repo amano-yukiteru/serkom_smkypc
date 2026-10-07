@@ -12,6 +12,11 @@ class IndexSiswaRequest extends FormRequest
         return true;
     }
 
+        /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
         return [
@@ -21,26 +26,4 @@ class IndexSiswaRequest extends FormRequest
             'page'        => 'nullable|integer|min:1',
         ];
     }
-
-    // public function messages(): array
-    // {
-    //     return [
-    //         'search.max'         => 'Kata kunci pencarian maksimal 50 karakter.',
-    //         'jenis.in'           => 'Jenis kelamin tidak valid.',
-    //         'tahun_masuk.digits' => 'Tahun masuk harus 4 digit.',
-    //         'tahun_masuk.integer'=> 'Tahun masuk harus berupa angka.',
-    //         'page.integer'       => 'Nomor halaman tidak valid.',
-    //         'page.min'           => 'Nomor halaman minimal 1.',
-    //     ];
-    // }
-
-    // public function attributes(): array
-    // {
-    //     return [
-    //         'search'      => 'Kata Kunci',
-    //         'jenis'       => 'Jenis Kelamin',
-    //         'tahun_masuk' => 'Tahun Masuk',
-    //         'page'        => 'Halaman',
-    //     ];
-    // }
 }

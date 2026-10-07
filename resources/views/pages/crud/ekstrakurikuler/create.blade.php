@@ -32,7 +32,7 @@
                     <x-ui.input
                         name="nama_eskul"
                         label="Nama Ekstrakurikuler"
-                        placeholder="Contoh: Pramuka, Paskibra"
+                        placeholder="Pramuka, Paskibra"
                         :value="old('nama_eskul')"
                         startIcon="file"
                         required

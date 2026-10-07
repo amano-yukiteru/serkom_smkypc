@@ -13,26 +13,22 @@ class LoginController extends Controller
         return view('pages.auth.login');
     }
 
-    public function login(Request $request)
+   public function login(Request $request)
     {
         $credentials = $request->validate([
-            'username' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            if (Auth::user()->role === 'Admin') {
-                return redirect()->intended('/dashboard');
-            }
-
-            return redirect()->intended('/dashboard');
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+            return back()->with('error', 'Username atau password salah.');
         }
 
-        return back()
-            ->withErrors(['username' => 'Username atau password salah.'])
-            ->onlyInput('username');
+        $request->session()->regenerate();
+
+        return redirect()
+            ->intended('/dashboard')
+            ->with('success', 'Selamat datang, ' . Auth::user()->name);
     }
 
     public function logout(Request $request)
@@ -41,6 +37,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('login.post');
     }
 }

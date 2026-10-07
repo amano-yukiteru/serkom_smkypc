@@ -11,26 +11,22 @@ use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
-    /**
-     * Tampilkan daftar user dengan search, filter role, sort, dan pagination.
-     */
     public function index(IndexUserRequest $request)
     {
         $validated = $request->validated();
 
-        $search  = $validated['search']   ?? null;
-        $role    = $validated['role']     ?? null;
-        $sort    = $validated['sort']     ?? 'created_at';
-        $order   = $validated['order']    ?? 'desc';
+        $search = $validated['search'] ?? null;
+        $role = $validated['role'] ?? null;
+        $sort = $validated['sort'] ?? 'created_at';
+        $order = $validated['order'] ?? 'desc';
         $perPage = $validated['per_page'] ?? 9;
 
         $users = User::query()
-            ->when($search, function ($q) use ($search) {
-                $q->where(function ($qq) use ($search) {
-                    $qq->where('name', 'like', "%{$search}%")
-                       ->orWhere('username', 'like', "%{$search}%");
-                });
-            })
+            ->when($search, fn ($q) => $q->whereAny(
+                ['name', 'username'],
+                'like',
+                "%{$search}%"
+            ))
             ->when($role, fn ($q) => $q->where('role', $role))
             ->orderBy($sort, $order)
             ->paginate($perPage)
@@ -39,83 +35,54 @@ class UserController extends Controller
         return view('pages.crud.user.index', compact('users'));
     }
 
-    /**
-     * Form tambah user baru.
-     */
     public function create()
     {
         return view('pages.crud.user.create');
     }
 
-    /**
-     * Simpan user baru ke database.
-     */
     public function store(StoreUserRequest $request)
     {
         User::create($request->validated());
-
-        return redirect()
-            ->route('user.index')
-            ->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan.');
     }
 
-    /**
-     * Tampilkan detail user.
-     */
     public function show(string $encryptedId)
     {
-        $user = $this->findByEncrypted($encryptedId);
-
-        return view('pages.crud.user.show', compact('user'));
+        //
     }
 
-    /**
-     * Form edit user.
-     */
     public function edit(string $encryptedId)
     {
-        $user = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $user = User::findOrFail($id);
 
         return view('pages.crud.user.edit', compact('user'));
     }
 
-    /**
-     * Update data user.
-     */
     public function update(UpdateUserRequest $request, string $encryptedId)
     {
-        $user = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $user = User::findOrFail($id);
         $data = $request->validated();
 
-        // Cegah ubah role dari Admin ke Oprator kalau dia satu-satunya Admin
-        if (
-            $user->role === 'Admin' &&
-            ($data['role'] ?? null) !== 'Admin' &&
-            User::where('role', 'Admin')->count() <= 1
-        ) {
-            return back()
-                ->withInput()
-                ->with('error', 'Tidak bisa mengubah role Admin terakhir. Minimal harus ada 1 Admin.');
+        if ($user->role === 'Admin' && ($data['role'] ?? null) !== 'Admin' && User::where('role', 'Admin')->count() <= 1)
+        {
+            return back()->withInput()->with('error', 'Tidak bisa mengubah role Admin terakhir.');
         }
 
-        // Kalau password kosong, jangan ubah
         if (empty($data['password'])) {
             unset($data['password']);
         }
 
         $user->update($data);
 
-        return redirect()
-            ->route('user.index')
-            ->with('success', 'User berhasil diperbarui.');
+        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui.');
     }
 
-    /**
-     * Hapus user.
-     */
     public function destroy(string $encryptedId)
     {
-        $user = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $user = User::findOrFail($id);
 
         // Cegah hapus akun sendiri
         if (Auth::id() === $user->id) {
@@ -123,32 +90,12 @@ class UserController extends Controller
         }
 
         // Cegah hapus Admin terakhir
-        if (
-            $user->role === 'Admin' &&
-            User::where('role', 'Admin')->count() <= 1
-        ) {
-            return back()->with('error', 'Tidak bisa menghapus Admin terakhir. Minimal harus ada 1 Admin.');
+        if ($user->role === 'Admin' && User::where('role', 'Admin')->count() <= 1) {
+            return back()->with('error', 'Tidak bisa menghapus Admin terakhir.');
         }
 
         $user->delete();
 
-        return redirect()
-            ->route('user.index')
-            ->with('success', 'User berhasil dihapus.');
-    }
-
-    /**
-     * Decrypt hash ID → cari User.
-     * Kalau gagal decrypt atau user tidak ditemukan → 404.
-     */
-    private function findByEncrypted(string $encryptedId): User
-    {
-        try {
-            $id = Crypt::decrypt($encryptedId);
-        } catch (\Throwable $e) {
-            abort(404);
-        }
-
-        return User::findOrFail($id);
+        return redirect()->route('user.index')->with('success', 'User berhasil dihapus.');
     }
 }

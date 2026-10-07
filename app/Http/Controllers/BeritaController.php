@@ -25,19 +25,14 @@ class BeritaController extends Controller
 
         $beritas = Berita::query()
             ->with('user:id,name')
-            ->when($search, function ($q) use ($search) {
-                $q->where(function ($qq) use ($search) {
-                    $qq->where('judul', 'like', "%{$search}%")
-                        ->orWhere('isi', 'like', "%{$search}%");
-                });
-            })
+            ->when($search, fn ($q) => $q->whereAny(['judul', 'isi'], 'like', "%{$search}%"))
             ->when($bulan, fn ($q) => $q->whereMonth('tanggal', $bulan))
             ->when($tahun, fn ($q) => $q->whereYear('tanggal', $tahun))
             ->orderBy($sort, $order)
             ->paginate($perPage)
             ->withQueryString();
 
-            $tahunList = Berita::query()
+        $tahunList = Berita::query()
             ->selectRaw('YEAR(tanggal) as tahun')
             ->distinct()
             ->orderBy('tahun', 'desc')
@@ -59,47 +54,32 @@ class BeritaController extends Controller
             $data['gambar'] = $request->file('gambar')->store('berita/gambar', 'public');
         }
 
-        // Set user_id dari user yang login
         $data['user_id'] = Auth::id();
 
         Berita::create($data);
 
-        return redirect()
-            ->route('berita.index')
-            ->with('success', 'Berita berhasil ditambahkan.');
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil ditambahkan.');
     }
 
     public function show(string $encryptedId)
     {
-        // $berita = $this->findByEncrypted($encryptedId);
-
-        // return view('pages.crud.berita.show', compact('berita'));
+        //
     }
 
     public function edit(string $encryptedId)
     {
-        try {
-            $berita = $this->findByEncrypted($encryptedId);
-        } catch (\Throwable $berita) {
-            return redirect()->route('berita.index')->with('error', 'data tidak ada');
-        }
+        $id = Crypt::decrypt($encryptedId);
+        $berita = Berita::findOrFail($id);
 
         return view('pages.crud.berita.edit', compact('berita'));
     }
 
     public function update(UpdateBeritaRequest $request, string $encryptedId)
     {
-        // $berita = $this->findByEncrypted($encryptedId);
-
-        try {
-            $berita = $this->findByEncrypted($encryptedId);
-        } catch (\Throwable $berita) {
-            return redirect()->route('berita.index')->with('error', 'data tidak falid');
-        }
-
+        $id = Crypt::decrypt($encryptedId);
+        $berita = Berita::findOrFail($id);
         $data = $request->validated();
 
-        // Kalau upload gambar baru → hapus lama, simpan baru
         if ($request->hasFile('gambar')) {
             if ($berita->gambar) {
                 Storage::disk('public')->delete($berita->gambar);
@@ -109,21 +89,14 @@ class BeritaController extends Controller
 
         $berita->update($data);
 
-        return redirect()
-            ->route('berita.index')
-            ->with('success', 'Berita berhasil diperbarui.');
+        return redirect()->route('berita.index')->with('success', 'Berita berhasil diperbarui.');
     }
 
     public function destroy(string $encryptedId)
     {
-        try {
-            $berita = $this->findByEncrypted($encryptedId);
-        } catch (\Throwable $berita) {
-            return redirect()->route('berita.index')->with('error', 'data tidak ada');
-        }
-        // $berita = $this->findByEncrypted($encryptedId);
+        $id = Crypt::decrypt($encryptedId);
+        $berita = Berita::findOrFail($id);
 
-        // Hapus file gambar dari storage
         if ($berita->gambar) {
             Storage::disk('public')->delete($berita->gambar);
         }
@@ -131,19 +104,6 @@ class BeritaController extends Controller
         $judul = $berita->judul;
         $berita->delete();
 
-        return redirect()
-            ->route('berita.index')
-            ->with('success', 'Berita "'.$judul.'" berhasil dihapus.');
-    }
-
-    private function findByEncrypted(string $encryptedId)
-    {
-        try {
-            $id = Crypt::decrypt($encryptedId);
-        } catch (\Throwable $e) {
-            abort(404);
-        }
-
-        return Berita::findOrFail($id);
+        return redirect()->route('berita.index')->with('success', 'Berita "'.$judul.'" berhasil dihapus.');
     }
 }

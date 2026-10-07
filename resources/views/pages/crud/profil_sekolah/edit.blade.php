@@ -88,14 +88,22 @@
             <x-ui.card class="mt-5">
                 <h3 class="mb-5 text-base font-semibold text-gray-800 dark:text-white/90">Konten</h3>
 
-                <div class="grid grid-cols-1 gap-5">
+                <div class="grid grid-cols-2 max-lg:grid-cols-1 gap-5">
 
                     <x-ui.textarea
-                        name="visi_misi"
-                        label="Visi & Misi"
+                        name="visi"
+                        label="Visi"
                         placeholder="Tulis visi & misi sekolah..."
                         :value="old('visi_misi', $profil?->visi_misi)"
-                        rows="5"
+                        rows="4"
+                        required
+                    />
+                     <x-ui.textarea
+                        name="misi"
+                        label="Misi"
+                        placeholder="Tulis visi & misi sekolah..."
+                        :value="old('visi_misi', $profil?->visi_misi)"
+                        rows="4"
                         required
                     />
 
@@ -104,7 +112,7 @@
                         label="Alamat"
                         placeholder="Alamat lengkap sekolah..."
                         :value="old('alamat', $profil?->alamat)"
-                        rows="3"
+                        rows="4"
                         required
                     />
 
@@ -124,11 +132,11 @@
             <x-ui.card class="mt-5">
                 <h3 class="mb-5 text-base font-semibold text-gray-800 dark:text-white/90">Media</h3>
 
-                <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div class="grid grid-cols-1">
 
                     <x-ui.file-input
                         name="foto"
-                        label="Foto Sekolah"
+                        label="Foto Kepala Sekolah"
                         accept="image/jpg,image/jpeg,image/png,image/webp"
                         :preview="$profil?->foto && \Illuminate\Support\Facades\Storage::disk('public')->exists($profil->foto)
                             ? asset('storage/' . $profil->foto)
@@ -136,7 +144,7 @@
                         hint="Kosongkan jika tidak ingin mengganti. Format: jpg, jpeg, png, webp. Maks 2MB."
                     />
 
-                    <x-ui.file-input
+                    {{-- <x-ui.file-input
                         name="logo"
                         label="Logo Sekolah"
                         accept="image/jpg,image/jpeg,image/png,image/webp,image/svg+xml"
@@ -144,12 +152,11 @@
                             ? asset('storage/' . $profil->logo)
                             : null"
                         hint="Kosongkan jika tidak ingin mengganti. Format: jpg, jpeg, png, webp, svg. Maks 1MB."
-                    />
+                    /> --}}
 
                 </div>
             </x-ui.card>
 
-            {{-- ==================== ACTION ==================== --}}
             <div class="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                 <x-ui.button href="{{ route('profil_sekolah.index') }}" variant="outline" class="!w-auto">
                     Batal

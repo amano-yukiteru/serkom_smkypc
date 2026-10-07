@@ -2,7 +2,10 @@
 
 @section('title', 'Data Galeri')
 
-@php use Illuminate\Support\Facades\Storage; @endphp
+@php
+    use Illuminate\Support\Facades\Crypt;
+    use Illuminate\Support\Facades\Storage;
+@endphp
 
 @section('content')
     <div class="space-y-5"
@@ -76,23 +79,22 @@
 
         @else
             {{-- GRID GALERI --}}
-            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($galeris as $item)
                     @php
-                        $extension = $item->file ? strtolower(pathinfo($item->file, PATHINFO_EXTENSION)) : '';
-                        $isVideo = in_array($extension, ['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogv']);
+                        $isVideo = $item->kategori === 'Video';
 
                         $media = $item->file && Storage::disk('public')->exists($item->file)
                             ? asset('storage/' . $item->file)
                             : null;
                     @endphp
 
-                    @if($isVideo && $media)
+                    @if ($isVideo && $media)
                         <div @click="playVideo('{{ $media }}', @js($item->judul))" class="cursor-pointer">
                             <x-ui.news-card
                                 :video="$media"
                                 :title="$item->judul"
-                                :excerpt="Str::limit(strip_tags($item->keteranga), 120)"
+                                :excerpt="Str::limit(strip_tags($item->keterangan), 120)"
                                 :date="'Video'"
                                 :editHref="route('galeri.edit', Crypt::encrypt($item->id))"
                                 :deleteModal="'delete-galeri-' . $item->id"
@@ -102,7 +104,7 @@
                         <x-ui.news-card
                             :image="$media"
                             :title="$item->judul"
-                            :excerpt="Str::limit(strip_tags($item->keteranga), 120)"
+                            :excerpt="Str::limit(strip_tags($item->keterangan), 120)"
                             :date="'Foto'"
                             :editHref="route('galeri.edit', Crypt::encrypt($item->id))"
                             :deleteModal="'delete-galeri-' . $item->id"
@@ -111,7 +113,7 @@
                 @endforeach
             </div>
 
-            {{-- ✅ MODAL DELETE — DI LUAR GRID supaya tidak merusak layout --}}
+            {{-- MODAL DELETE --}}
             @foreach ($galeris as $item)
                 <x-ui.modal name="delete-galeri-{{ $item->id }}" title="Hapus Galeri?">
                     <p class="text-sm text-gray-600 dark:text-gray-300">
@@ -149,7 +151,7 @@
             </x-ui.card>
         @endif
 
-        {{-- ==================== VIDEO MODAL PLAYER ==================== --}}
+        {{-- VIDEO MODAL PLAYER --}}
         <div
             x-show="videoOpen"
             x-cloak

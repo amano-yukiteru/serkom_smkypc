@@ -11,13 +11,17 @@ class IndexBeritaRequest extends FormRequest
     {
         return true;
     }
-
-    public function rules(): array
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules()
     {
         return [
             'search'    => 'nullable|string|max:100',
-            'sort'      => ['nullable', 'string', Rule::in(['judul', 'tanggal', 'created_at'])],
-            'order'     => ['nullable', 'string', Rule::in(['asc', 'desc'])],
+            'sort'      => 'nullable|string|in:judul,tanggal,created_at',
+            'order'     => 'nullable|string|in:asc,desc',
             'per_page'  => 'nullable|integer|min:5|max:100',
             'page'      => 'nullable|integer|min:1',
             'bulan'     => 'nullable|integer|min:1|max:12',

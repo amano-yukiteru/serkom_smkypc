@@ -4,6 +4,7 @@ namespace App\Http\Requests\Siswa;
 
 use App\Models\Siswa;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 
 class UpdateSiswaRequest extends FormRequest
@@ -13,43 +14,23 @@ class UpdateSiswaRequest extends FormRequest
         return true;
     }
 
+        /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
     public function rules(): array
     {
-        $siswaId = $this->route('siswa')?->id;
-
+        $encryptedId = $this->route('siswa');
+        $id = Crypt::decrypt($encryptedId);
+        $siswa = Siswa::findOrFail($id);
+        $id = $siswa->id;
+        
         return [
-            'nisn'        => 'required|digits:10|unique:siswas,nisn,' . $siswaId,
+            'nisn'        => 'required|digits:10|unique:siswas,nisn,' . $id,
             'nama_siswa'  => 'required|string|max:40',
             'jenis'       => 'required|in:Laki-Laki,Perempuan',
             'tahun_masuk' => 'required|digits:4|integer|min:2000|max:' . date('Y'),
         ];
     }
-
-    // public function messages(): array
-    // {
-    //     return [
-    //         'nisn.required'        => 'NISN wajib diisi.',
-    //         'nisn.digits'          => 'NISN harus 10 digit angka.',
-    //         'nisn.unique'          => 'NISN sudah terdaftar.',
-    //         'nama_siswa.required'  => 'Nama siswa wajib diisi.',
-    //         'nama_siswa.max'       => 'Nama siswa maksimal 40 karakter.',
-    //         'jenis.required'       => 'Jenis kelamin wajib dipilih.',
-    //         'jenis.in'             => 'Jenis kelamin tidak valid.',
-    //         'tahun_masuk.required' => 'Tahun masuk wajib diisi.',
-    //         'tahun_masuk.digits'   => 'Tahun masuk harus 4 digit.',
-    //         'tahun_masuk.integer'  => 'Tahun masuk harus berupa angka.',
-    //         'tahun_masuk.min'      => 'Tahun masuk minimal 2000.',
-    //         'tahun_masuk.max'      => 'Tahun masuk tidak boleh melebihi tahun sekarang.',
-    //     ];
-    // }
-
-    // public function attributes(): array
-    // {
-    //     return [
-    //         'nisn'        => 'NISN',
-    //         'nama_siswa'  => 'Nama Siswa',
-    //         'jenis'       => 'Jenis Kelamin',
-    //         'tahun_masuk' => 'Tahun Masuk',
-    //     ];
-    // }
 }

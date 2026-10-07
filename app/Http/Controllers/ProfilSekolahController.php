@@ -8,34 +8,24 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfilSekolahController extends Controller
 {
-    /**
-     * Display the school profile.
-     */
     public function index()
     {
         $profil = ProfilSekolah::first();
-
         return view('pages.crud.profil_sekolah.index', compact('profil'));
     }
 
-    /**
-     * Show the form for editing the profile.
-     */
     public function edit()
     {
         $profil = ProfilSekolah::first();
-
         return view('pages.crud.profil_sekolah.edit', compact('profil'));
     }
 
-    /**
-     * Update the profile.
-     */
     public function update(UpdateProfilSekolahRequest $request)
     {
-        $data   = $request->validated();
+        $data = $request->validated();
         $profil = ProfilSekolah::first();
 
+        // Hapus & simpan foto baru (kalau upload)
         if ($request->hasFile('foto')) {
             if ($profil?->foto) {
                 Storage::disk('public')->delete($profil->foto);
@@ -43,6 +33,7 @@ class ProfilSekolahController extends Controller
             $data['foto'] = $request->file('foto')->store('profil_sekolah/foto', 'public');
         }
 
+        // Hapus & simpan logo baru (kalau upload)
         if ($request->hasFile('logo')) {
             if ($profil?->logo) {
                 Storage::disk('public')->delete($profil->logo);
@@ -50,14 +41,9 @@ class ProfilSekolahController extends Controller
             $data['logo'] = $request->file('logo')->store('profil_sekolah/logo', 'public');
         }
 
-        if ($profil) {
-            $profil->update($data);
-        } else {
-            ProfilSekolah::create($data);
-        }
+        // Update kalau sudah ada, create kalau belum
+        $profil ? $profil->update($data) : ProfilSekolah::create($data);
 
-        return redirect()
-            ->route('profil_sekolah.index')
-            ->with('success', 'Profil sekolah berhasil diperbarui.');
+        return redirect()->route('profil_sekolah.index')->with('success', 'Profil sekolah berhasil diperbarui.');
     }
 }

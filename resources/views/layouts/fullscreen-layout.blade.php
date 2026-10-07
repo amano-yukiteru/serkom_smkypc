@@ -113,7 +113,7 @@ const checkMobile = () => {
     }
 };
 window.addEventListener('resize', checkMobile);">
-
+    <x-ui.toast position="top-right" />
     @yield('content')
 
 </body>
