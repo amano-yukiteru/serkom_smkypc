@@ -68,16 +68,28 @@ class GaleriController extends Controller
 
     public function edit(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $galeri = Galeri::findOrFail($id);
+         try {
+            $id = Crypt::decrypt($encryptedId);
+            $galeri = Galeri::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('galeri.index')->with('error', 'data tidak ditemukan');
+        }
 
         return view('pages.crud.galeri.edit', compact('galeri'));
     }
 
     public function update(UpdateGaleriRequest $request, string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $galeri = Galeri::findOrFail($id);
+         try {
+            $id = Crypt::decrypt($encryptedId);
+            $galeri = Galeri::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('galeri.index')->with('error', 'data tidak ditemukan');
+        }
         $data = $request->validated();
 
         if ($request->hasFile('file')) {
@@ -101,8 +113,14 @@ class GaleriController extends Controller
 
     public function destroy(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $galeri = Galeri::findOrFail($id);
+         try {
+            $id = Crypt::decrypt($encryptedId);
+            $galeri = Galeri::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('galeri.index')->with('error', 'data tidak ditemukan');
+        }
 
         if ($galeri->file) {
             Storage::disk('public')->delete($galeri->file);

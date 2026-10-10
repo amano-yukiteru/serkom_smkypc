@@ -68,16 +68,24 @@ class BeritaController extends Controller
 
     public function edit(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $berita = Berita::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $berita = Berita::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('berita.index')->with('error', 'data tidak ditemukan');
+        }
 
         return view('pages.crud.berita.edit', compact('berita'));
     }
 
     public function update(UpdateBeritaRequest $request, string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $berita = Berita::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $berita = Berita::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('berita.index')->with('error', 'data tidak ditemukan');
+        }
         $data = $request->validated();
 
         if ($request->hasFile('gambar')) {
@@ -94,8 +102,12 @@ class BeritaController extends Controller
 
     public function destroy(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $berita = Berita::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $berita = Berita::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('berita.index')->with('error', 'data tidak ditemukan');
+        }
 
         if ($berita->gambar) {
             Storage::disk('public')->delete($berita->gambar);

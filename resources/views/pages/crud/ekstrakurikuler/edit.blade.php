@@ -9,8 +9,8 @@
             ['label' => 'Ekstrakurikuler', 'url' => route('ekstrakurikuler.index')],
             ['label' => 'Edit'],
         ]" />
-
-        <div class="flex items-center justify-between gap-4">
+        <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">Edit Ekstrakurikuler</h1>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -18,13 +18,15 @@
                     <strong class="text-gray-800 dark:text-white/90">{{ $eskul->nama_eskul }}</strong>.
                 </p>
             </div>
-
-            <x-ui.button href="{{ route('ekstrakurikuler.index') }}" variant="outline" startIcon="arrow-left" class="!w-auto shrink-0">
-                Kembali
-            </x-ui.button>
+                <x-ui.button href="{{ route('ekstrakurikuler.index') }}" variant="outline" startIcon="arrow-left" class="!w-auto shrink-0">
+                    Kembali
+                </x-ui.button>
         </div>
+        </x-ui.card>
 
-        <form action="{{ route('ekstrakurikuler.update', Crypt::encrypt($eskul->id)) }}" method="POST" enctype="multipart/form-data">
+        {{-- </div> --}}
+
+        <form action="{{ route('ekstrakurikuler.update', $encryptedId = Crypt::encrypt($eskul->id)) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -34,7 +36,7 @@
                     <x-ui.input
                         name="nama_eskul"
                         label="Nama Ekstrakurikuler"
-                        placeholder="Pramuka, Paskibra"
+                        placeholder="Nama eskul"
                         :value="old('nama_eskul', $eskul->nama_eskul)"
                         startIcon="file"
                         required
@@ -52,10 +54,10 @@
                     {{-- Hari saja --}}
                     <div class="md:col-span-2">
                         <x-ui.select
-                            name="hari"
+                            name="jadwal_latihan"
                             label="Hari Latihan"
                             placeholder="Pilih hari"
-                            :value="old('hari', $eskul->jadwal_latihan)"
+                            :value="old('jadwal_latihan', $eskul->jadwal_latihan)"
                             :options="[
                                 'Senin'  => 'Senin',
                                 'Selasa' => 'Selasa',

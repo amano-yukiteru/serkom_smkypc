@@ -9,7 +9,9 @@
         <x-ui.breadcrumb :items="[['label' => 'Siswa']]" />
 
         {{-- HEADER --}}
-        <div class="flex items-center justify-between gap-4">
+                <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
+        {{-- <div class="flex items-center justify-between gap-4"> --}}
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">
                     Data Siswa
@@ -26,7 +28,9 @@
             >
                 Tambah Siswa
             </x-ui.button>
+        {{-- </div> --}}
         </div>
+        </x-ui.card>
 
         {{-- CARD --}}
         <x-ui.card :padding="false">
@@ -144,7 +148,7 @@
                         Batal
                     </x-ui.button>
 
-                    <form action="{{ route('siswa.destroy', $item->id) }}" method="POST" class="inline">
+                    <form action="{{ route('siswa.destroy', Crypt::encrypt($item->id)) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
                         <x-ui.button type="submit" variant="danger">Hapus</x-ui.button>

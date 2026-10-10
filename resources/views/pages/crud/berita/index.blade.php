@@ -91,12 +91,19 @@
         @else
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 @foreach ($beritas as $item)
-                    <x-ui.news-card :image="$item->gambar && Storage::disk('public')->exists($item->gambar)
+                    <x-ui.news-card
+                        :image="$item->gambar && Storage::disk('public')->exists($item->gambar)
                             ? asset('storage/' . $item->gambar)
-                            : null" :title="$item->judul" :excerpt="Str::limit(strip_tags($item->isi), 120)"
-                        :date="$item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') : null"
-                        :author="$item->user?->name ?? 'Anonim'" :editHref="route('berita.edit', Crypt::encrypt($item->id))"
-                        :deleteModal="'delete-berita-' . $item->id" />
+                            : null"
+                        :title="$item->judul"
+                        :excerpt="Str::limit(strip_tags($item->isi), 120)"
+                        :date="$item->tanggal
+                            ? \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y')
+                            : null"
+                        :author="$item->user?->name ?? 'Anonim'"
+                        :editHref="route('berita.edit', Crypt::encrypt($item->id))"
+                        :deleteModal="'delete-berita-' . $item->id"
+                    />
                 @endforeach
             </div>
 

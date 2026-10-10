@@ -26,7 +26,8 @@ class UpdateProfilSekolahRequest extends FormRequest
             'deskripsi'      => 'required|string',
 
             'foto'           => 'nullable|mimetypes:image/jpeg,image/png,image/webp|max:2048',
-            // 'logo' => 'nullable|mimetypes:image/jpeg,image/png,image/webp,image/svg+xml|max:2048',
+            'foto_sekolah'   => 'nullable|mimetypes:image/jpeg,image/png,image/webp|max:2048',
+            'logo'           => 'nullable|mimetypes:image/jpeg,image/png,image/webp|max:2048',
         ];
     }
 }

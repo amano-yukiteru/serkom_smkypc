@@ -53,16 +53,28 @@ class UserController extends Controller
 
     public function edit(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $user = User::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $user = User::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('user.index')->with('error', 'data tidak ditemukan');
+        }
 
         return view('pages.crud.user.edit', compact('user'));
     }
 
     public function update(UpdateUserRequest $request, string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $user = User::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $user = User::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('user.index')->with('error', 'data tidak ditemukan');
+        }
         $data = $request->validated();
 
         if ($user->role === 'Admin' && ($data['role'] ?? null) !== 'Admin' && User::where('role', 'Admin')->count() <= 1)
@@ -81,8 +93,14 @@ class UserController extends Controller
 
     public function destroy(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $user = User::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $user = User::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('user.index')->with('error', 'data tidak ditemukan');
+        }
 
         // Cegah hapus akun sendiri
         if (Auth::id() === $user->id) {

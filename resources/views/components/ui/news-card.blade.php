@@ -79,7 +79,8 @@
                 <div class="flex min-w-0 items-center gap-2">
                     {{-- Avatar inisial --}}
                     <div class="flex h-7 w-7 items-center justify-center rounded-full 
-                                bg-gradient-to-br from-indigo-500 to-purple-500 
+                                {{-- bg-gradient-to-br from-indigo-500 to-purple-500  --}}
+                                bg-blue-800
                                 text-[10px] font-bold text-white">
                         {{ strtoupper(substr($author, 0, 1)) }}
                     </div>

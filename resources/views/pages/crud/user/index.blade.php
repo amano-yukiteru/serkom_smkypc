@@ -8,7 +8,8 @@
         <x-ui.breadcrumb :items="[['label' => 'User']]" />
 
         {{-- HEADER --}}
-        <div class="flex items-center justify-between gap-4">
+        <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">Data User</h1>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kelola data user di sini.</p>
@@ -18,6 +19,7 @@
                 Tambah User
             </x-ui.button>
         </div>
+        </x-ui.card>
 
         {{-- CARD --}}
         <x-ui.card :padding="false">

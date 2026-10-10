@@ -21,6 +21,8 @@ class UpdateJurusanRequest extends FormRequest
         return [
             'nama'      => "required|string|max:100|unique:jurusans,nama," . $id,
             'singkatan' => "required|string|max:10|unique:jurusans,singkatan," . $id,
+            'deskripsi' => "required|string",
+            'logo'      => "required|image|mimes:jpg,jpeg,png,webp|max:2048",
         ];
     }
 }

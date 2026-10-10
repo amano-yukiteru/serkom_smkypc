@@ -23,7 +23,7 @@ class GaleriSeeder extends Seeder
         foreach ($galeri as $i => $g) {
             Galeri::create([
                 'judul'     => $g['judul'],
-                'keteranga' => $g['keterangan'],   // typo di migration
+                'keterangan' => $g['keterangan'],   // typo di migration
                 'file'      => 'galeri/default' . ($i + 1) . '.jpg',
                 'kategori'  => $g['kategori'],
             ]);

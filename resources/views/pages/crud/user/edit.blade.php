@@ -7,7 +7,8 @@
 
         <x-ui.breadcrumb :items="[['label' => 'User', 'url' => route('user.index')], ['label' => 'Edit']]" />
 
-        <div class="flex items-center justify-between gap-4">
+        <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">Edit User</h1>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -20,6 +21,7 @@
                 Kembali
             </x-ui.button>
         </div>
+        </x-ui.card>
 
         <form action="{{ route('user.update', Crypt::encrypt($user->id)) }}" method="POST">
             @csrf
@@ -44,13 +46,15 @@
                         startIcon="user" 
                         required />
 
-                    <x-ui.select 
+                    @if (Auth::user()->role != $user->role)
+                        <x-ui.select 
                         name="role" 
                         label="Role" 
                         placeholder="Pilih role"
                         :value="old('role', $user->role)"
                         :options="['Admin' => 'Admin', 'Oprator' => 'Oprator']"
                         required />
+                    @endif
 
                     <x-ui.input 
                         name="password" 

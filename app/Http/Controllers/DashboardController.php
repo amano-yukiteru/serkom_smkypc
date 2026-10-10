@@ -7,7 +7,7 @@ use App\Models\Ekstrakurikuler;
 use App\Models\Galeri;
 use App\Models\Guru;
 use App\Models\Jurusan;
-use App\Models\ProfilSekolah;
+use App\Models\Kerjasama;
 use App\Models\Siswa;
 use App\Models\User;
 
@@ -15,89 +15,23 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Profil sekolah (single record)
-        $profil = ProfilSekolah::first();
+        return view('pages.dashboard.index', [
+            'totalBerita'           => Berita::count(),
+            'totalGuru'             => Guru::count(),
+            'totalSiswa'            => Siswa::count(),
+            'totalGaleri'           => Galeri::count(),
+            'totalEkstrakurikuler'  => Ekstrakurikuler::count(),
+            'totalJurusan'          => Jurusan::count(),
+            'totalKerjasama'        => Kerjasama::count(),
+            'totalUser'             => User::count(),
 
-        $totalUser = User::count();
-        $totalJurusan = Jurusan::count();
-        $totalGaleri = Galeri::count();
-        $totalSiswa = Siswa::count();
-        $totalGuru = Guru::count();
-        $totalEskul = Ekstrakurikuler::count();
-
-        $berita = Berita::query()
-            ->with('user:id,name')
-            ->orderBy('tanggal', 'desc')
-            ->limit(3)
-            ->get();
-
-        $ekstrakurikuler = Ekstrakurikuler::query()
-            ->latest('id')
-            ->limit(3)
-            ->get();
-
-        $galeris = Galeri::query()
-            ->latest('id')
-            ->limit(8)
-            ->get();
-
-        $gurus = Guru::query()
-            ->latest('id')
-            ->limit(5)
-            ->get();
-
-        return view('pages.company_profile.index', compact(
-            // 'profil',
-            'berita',
-            'ekstrakurikuler',
-            'galeris',
-            'gurus',
-            'jurusan',
-            
-            'totalUser',
-            'totalGaleri',
-            'totalJurusan',
-            'totalSiswa',
-            'totalGuru',
-            'totalEskul',
-            
-        ));
-    }
-
-    public function admin()
-    {
-        // Statistik
-        $totalSiswa = Siswa::count();
-        $totalGuru = Guru::count();
-        $totalBerita = Berita::count();
-        $totalGaleri = Galeri::count();
-        $totalEskul = Ekstrakurikuler::count();
-
-        // Berita terbaru (3 item)
-        $beritaTerbaru = Berita::query()
-            ->with('user:id,name')
-            ->orderBy('tanggal', 'desc')
-            ->limit(3)
-            ->get();
-
-        // Ekstrakurikuler (3 item terbaru)
-        $ekstrakurikuler = Ekstrakurikuler::query()
-            ->latest('id')
-            ->limit(3)
-            ->get();
-
-        // Profil sekolah
-        $profil = ProfilSekolah::first();
-
-        return view('pages.dashboard.index', compact(
-            'totalSiswa',
-            'totalGuru',
-            'totalBerita',
-            'totalGaleri',
-            'totalEskul',
-            'beritaTerbaru',
-            'ekstrakurikuler',
-            'profil',
-        ));
+            'beritas'               => Berita::latest()->take(3)->get(),
+            'gurus'                 => Guru::latest()->take(3)->get(),
+            'siswas'                => Siswa::latest()->take(3)->get(),
+            'galeris'               => Galeri::latest()->take(3)->get(),
+            'jurusans'              => Jurusan::latest()->take(3)->get(),
+            'kerjasamas'            => Kerjasama::latest()->take(3)->get(),
+            'ekstrakurikulers'      => Ekstrakurikuler::latest()->take(3)->get(),
+        ]);
     }
 }

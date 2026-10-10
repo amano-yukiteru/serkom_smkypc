@@ -12,7 +12,8 @@
         ]" />
 
         {{-- HEADER --}}
-        <div class="flex items-center justify-between gap-4">
+        <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">
                     Edit Siswa
@@ -32,9 +33,10 @@
                 Kembali
             </x-ui.button>
         </div>
+        </x-ui.card>
 
         {{-- FORM --}}
-        <form action="{{ route('siswa.update', $siswa->id) }}" method="POST">
+        <form action="{{ route('siswa.update', Crypt::encrypt($siswa->id)) }}" method="POST">
             @csrf
             @method('PUT')
 

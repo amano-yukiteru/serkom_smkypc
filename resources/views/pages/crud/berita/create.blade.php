@@ -9,6 +9,7 @@
             ['label' => 'Berita', 'url' => route('berita.index')],
             ['label' => 'Tambah'],
         ]" />
+        
         <x-ui.card :padding="false">
             <div class="flex items-center justify-between gap-4 px-5 py-4">
                 <div class="min-w-0">
@@ -32,7 +33,7 @@
 
                     <x-ui.input
                         name="judul"
-                        label="Judul"
+                        label="Judul Berita"
                         placeholder="Judul berita"
                         :value="old('judul')"
                         startIcon="file-text"

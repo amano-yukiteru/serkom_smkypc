@@ -53,16 +53,24 @@ class GuruController extends Controller
 
     public function edit(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $guru = Guru::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $guru = Guru::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('guru.index')->with('error', 'data tidak ditemukan');
+        }
 
         return view('pages.crud.guru.edit', compact('guru'));
     }
 
     public function update(UpdateGuruRequest $request, string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $guru = Guru::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $guru = Guru::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('guru.index')->with('error', 'data tidak ditemukan');
+        }
         $data = $request->validated();
 
         if ($request->hasFile('foto')) {
@@ -79,8 +87,12 @@ class GuruController extends Controller
 
     public function destroy(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $guru = Guru::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $guru = Guru::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('guru.index')->with('error', 'data tidak ditemukan');
+        }
 
         if ($guru->foto) {
             Storage::disk('public')->delete($guru->foto);

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama', 100)->unique();
             $table->string('singkatan', 10)->unique();
+            $table->text('deskripsi');
+            $table->string('logo', 100);
             $table->timestamps();
         });
     }

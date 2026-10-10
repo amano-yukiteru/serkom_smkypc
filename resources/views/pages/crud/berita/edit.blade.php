@@ -33,7 +33,7 @@
 
                     <x-ui.input
                         name="judul"
-                        label="Judul"
+                        label="Judul Berita"
                         placeholder="Judul berita"
                         :value="old('judul', $berita->judul)"
                         startIcon="file-text"

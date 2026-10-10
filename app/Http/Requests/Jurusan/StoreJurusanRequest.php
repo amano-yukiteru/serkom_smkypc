@@ -11,7 +11,7 @@ class StoreJurusanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,8 @@ class StoreJurusanRequest extends FormRequest
         return [
             'nama' => "required|string|max:100|unique:jurusans,nama",
             'singkatan' => "required|string|max:10|unique:jurusans,singkatan",
+            'deskripsi' => "required|string",
+            'logo' => "required|image|mimes:jpg,jpeg,png,webp|max:2048",
         ];
     }
 }

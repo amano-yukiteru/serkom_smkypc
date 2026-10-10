@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Edit Profil Sekolah')
-
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
 @section('content')
     <div class="space-y-5">
 
@@ -10,7 +12,8 @@
             ['label' => 'Edit'],
         ]" />
 
-        <div class="flex items-center justify-between gap-4">
+        <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">Edit Profil Sekolah</h1>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -22,6 +25,7 @@
                 Kembali
             </x-ui.button>
         </div>
+        </x-ui.card>
 
         <form action="{{ route('profil_sekolah.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -93,16 +97,16 @@
                     <x-ui.textarea
                         name="visi"
                         label="Visi"
-                        placeholder="Tulis visi & misi sekolah..."
-                        :value="old('visi_misi', $profil?->visi_misi)"
+                        placeholder="Tulis visi sekolah"
+                        :value="old('visi', $profil?->visi)"
                         rows="4"
                         required
                     />
                      <x-ui.textarea
                         name="misi"
                         label="Misi"
-                        placeholder="Tulis visi & misi sekolah..."
-                        :value="old('visi_misi', $profil?->visi_misi)"
+                        placeholder="Tulis misi sekolah"
+                        :value="old('misi', $profil?->misi)"
                         rows="4"
                         required
                     />
@@ -138,21 +142,31 @@
                         name="foto"
                         label="Foto Kepala Sekolah"
                         accept="image/jpg,image/jpeg,image/png,image/webp"
-                        :preview="$profil?->foto && \Illuminate\Support\Facades\Storage::disk('public')->exists($profil->foto)
+                        :preview="$profil?->foto && Storage::disk('public')->exists($profil->foto)
                             ? asset('storage/' . $profil->foto)
                             : null"
                         hint="Kosongkan jika tidak ingin mengganti. Format: jpg, jpeg, png, webp. Maks 2MB."
                     />
 
-                    {{-- <x-ui.file-input
+                    <x-ui.file-input
                         name="logo"
                         label="Logo Sekolah"
                         accept="image/jpg,image/jpeg,image/png,image/webp,image/svg+xml"
-                        :preview="$profil?->logo && \Illuminate\Support\Facades\Storage::disk('public')->exists($profil->logo)
+                        :preview="$profil?->logo && Storage::disk('public')->exists($profil->logo)
                             ? asset('storage/' . $profil->logo)
                             : null"
                         hint="Kosongkan jika tidak ingin mengganti. Format: jpg, jpeg, png, webp, svg. Maks 1MB."
-                    /> --}}
+                    />
+
+                    <x-ui.file-input
+                        name="foto_sekolah"
+                        label="Foto Sekolah"
+                        accept="image/jpg,image/jpeg,image/png,image/webp,image/svg+xml"
+                        :preview="$profil?->foto_sekolah && Storage::disk('public')->exists($profil->foto_sekolah)
+                            ? asset('storage/' . $profil->foto_sekolah)
+                            : null"
+                        hint="Kosongkan jika tidak ingin mengganti. Format: jpg, jpeg, png, webp, svg. Maks 1MB."
+                    />
 
                 </div>
             </x-ui.card>

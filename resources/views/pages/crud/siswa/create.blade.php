@@ -12,7 +12,9 @@
         ]" />
 
         {{-- HEADER --}}
-        <div class="flex items-center justify-between gap-4">
+                <x-ui.card :padding="false">
+        <div class="flex items-center justify-between gap-4 px-5 py-4">
+        {{-- <div class="flex items-center justify-between gap-4"> --}}
             <div class="min-w-0">
                 <h1 class="text-2xl font-semibold text-gray-800 dark:text-white/90">
                     Tambah Siswa
@@ -30,7 +32,9 @@
             >
                 Kembali
             </x-ui.button>
+        {{-- </div> --}}
         </div>
+        </x-ui.card>
 
         {{-- FORM --}}
         <form action="{{ route('siswa.store') }}" method="POST">

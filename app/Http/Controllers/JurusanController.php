@@ -2,64 +2,132 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Jurusan\StoreJurusanRequest;
+use App\Http\Requests\Jurusan\UpdateJurusanRequest;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class JurusanController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * ============================================
+     * LIST + SEARCH + PAGINATION
+     * URL: /jurusan
+     * Route: jurusan.index
+     * ============================================
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $jurusans = Jurusan::query()
+            ->when($request->filled('search'), function ($q) use ($request) {
+                $search = $request->search;
+                $q->where(function ($sub) use ($search) {
+                    $sub->where('nama', 'like', "%{$search}%")
+                        ->orWhere('singkatan', 'like', "%{$search}%");
+                });
+            })
+            // ->withCount('siswas')          // hitung jumlah siswa per jurusan
+            ->latest('id')
+            ->paginate(9)
+            ->withQueryString();           // search tetap kebawa saat pindah page
+
+        return view('pages.crud.jurusan.index', compact('jurusans'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('pages.crud.jurusan.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreJurusanRequest $request)
     {
-        //
+        $data = $request->validated();
+
+
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('jurusan', 'public');
+        }
+
+        Jurusan::create($data);
+
+        return redirect()
+            ->route('jurusan.index')
+            ->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Jurusan $jurusan)
+    public function show(string $id)
     {
-        //
+        // $jurusan = Jurusan::withCount('siswas')->findOrFail(Crypt::decrypt($id));
+
+        // return view('pages.crud.jurusan.show', compact('jurusan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Jurusan $jurusan)
+
+    public function edit(string $id)
     {
-        //
+         try {
+            $id = Crypt::decrypt($id);
+            $jurusan = Jurusan::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('jurusan.index')->with('error', 'data tidak ditemukan');
+        }
+
+        return view('pages.crud.jurusan.edit', compact('jurusan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Jurusan $jurusan)
+
+    public function update(UpdateJurusanRequest $request, string $id)
     {
-        //
+        try {
+            $id = Crypt::decrypt($id);
+            $jurusan = Jurusan::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('jurusan.index')->with('error', 'data tidak ditemukan');
+        }
+        
+        $data = $request->validated();
+
+        if ($request->hasFile('logo')) {
+            if ($jurusan->logo && Storage::disk('public')->exists($jurusan->logo)) {
+                Storage::disk('public')->delete($jurusan->logo);
+            }
+
+            $data['logo'] = $request->file('logo')->store('jurusan', 'public');
+        }
+
+        $jurusan->update($data);
+
+        return redirect()
+            ->route('jurusan.index')
+            ->with('success', 'Jurusan berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Jurusan $jurusan)
+    public function destroy(string $id)
     {
-        //
+         try {
+            $id = Crypt::decrypt($id);
+            $jurusan = Jurusan::findOrFail($id);
+        //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('jurusan.index')->with('error', 'data tidak ditemukan');
+        }
+
+        // Hapus file logo dari storage
+        if ($jurusan->logo && Storage::disk('public')->exists($jurusan->logo)) {
+            Storage::disk('public')->delete($jurusan->logo);
+        }
+
+        $jurusan->delete();
+
+        return redirect()
+            ->route('jurusan.index')
+            ->with('success', 'Jurusan berhasil dihapus.');
     }
 }

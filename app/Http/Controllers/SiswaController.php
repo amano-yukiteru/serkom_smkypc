@@ -2,37 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Siswa\IndexSiswaRequest;
 use App\Http\Requests\Siswa\StoreSiswaRequest;
 use App\Http\Requests\Siswa\UpdateSiswaRequest;
 use App\Models\Siswa;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
 class SiswaController extends Controller
 {
-    public function index(IndexSiswaRequest $request)
+    public function index(Request $request)
     {
-        $filters = $request->validated();
+        $search = $request->input('search');
 
         $siswa = Siswa::query()
-            ->when(! empty($filters['search']), fn ($q) => $q->whereAny(
+            ->when($search, fn ($q) => $q->whereAny(
                 ['nama_siswa', 'nisn'],
                 'like',
-                "%{$filters['search']}%"
+                "%{$search}%"
             ))
-            ->when(! empty($filters['jenis']), fn ($q) => $q->where('jenis', $filters['jenis']))
-            ->when(! empty($filters['tahun_masuk']), fn ($q) => $q->where('tahun_masuk', $filters['tahun_masuk']))
-            ->latest('id')
-            ->paginate($filters['per_page'] ?? 9)
+            ->latest()
+            ->paginate(10)
             ->withQueryString();
 
-        $tahunList = Siswa::query()
-            ->select('tahun_masuk')
-            ->distinct()
-            ->orderBy('tahun_masuk', 'desc')
-            ->pluck('tahun_masuk');
-
-        return view('pages.crud.siswa.index', compact('siswa', 'tahunList'));
+        return view('pages.crud.siswa.index', compact('siswa'));
     }
 
     public function create()
@@ -42,44 +35,55 @@ class SiswaController extends Controller
 
     public function store(StoreSiswaRequest $request)
     {
-        $siswa = Siswa::create($request->validated());
+        Siswa::create($request->validated());
 
-        return redirect()
-            ->route('siswa.index')
-            ->with('success', "Siswa \"{$siswa->nama_siswa}\" berhasil ditambahkan.");
-    }
-
-    public function show(string $encryptedId)
-    {
-        //
+        return redirect()->route('siswa.index')
+            ->with('success', 'Data siswa berhasil ditambahkan.');
     }
 
     public function edit(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $siswa = Siswa::findOrFail($id);
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $siswa = Siswa::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('siswa.index')->with('error', 'data tidak ditemukan');
+        }
+        // $siswa = $this->findByEncryptedId($encryptedId);
 
         return view('pages.crud.siswa.edit', compact('siswa'));
     }
 
     public function update(UpdateSiswaRequest $request, string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $siswa = Siswa::findOrFail($id);
-
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $siswa = Siswa::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('siswa.index')->with('error', 'data tidak ditemukan');
+        }
+        
+        // $siswa = $this->findByEncryptedId($encryptedId);
         $siswa->update($request->validated());
 
-        return redirect()->route('siswa.index')->with('success', "Data siswa \"{$siswa->nama_siswa}\" berhasil diperbarui.");
+        return redirect()->route('siswa.index')
+            ->with('success', 'Data siswa berhasil diperbarui.');
     }
 
     public function destroy(string $encryptedId)
     {
-        $id = Crypt::decrypt($encryptedId);
-        $siswa = Siswa::findOrFail($id);
-
-        $nama = $siswa->nama_siswa;
+        // $siswa = $this->findByEncryptedId($encryptedId);
+         try {
+            $id = Crypt::decrypt($encryptedId);
+            $siswa = Siswa::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('siswa.index')->with('error', 'data tidak ditemukan');
+        }
+        $nama  = $siswa->nama_siswa;
         $siswa->delete();
 
-        return redirect()->route('siswa.index')->with('success', "Siswa \"{$nama}\" berhasil dihapus.");
+        return redirect()->route('siswa.index')
+            ->with('success', 'Data siswa "'.$nama.'" berhasil dihapus.');
     }
+
 }

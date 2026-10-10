@@ -49,7 +49,7 @@
         'translate-x-0': $store.sidebar.isMobileOpen,
         'max-xl:-translate-x-full max-xl:rtl:translate-x-full': !$store.sidebar.isMobileOpen
     }"
-    @mouseenter="if (!$store.sidebar.isExpanded) $store.sidebar.setHovered(true)"
+    @mouseenter="if (!$store.sidebar.isExpanded) $store.sidebar.setHovered(false)"
     @mouseleave="$store.sidebar.setHovered(false)">
 
     {{-- ============ LOGO ============ --}}
@@ -58,12 +58,14 @@
             ? 'justify-center'
             : 'justify-start'">
 
-        <img src="{{ asset('assets/smkypc.jpeg') }}"
-             alt="p"
-             class="h-12 w-12 shrink-0 rounded-md object-contain">
+         @if($profil->logo)
+            <img src="{{ asset('storage/' . $profil->logo) }}" alt="Logo" class="h-8 w-8 rounded object-contain shrink-0">
+        @else
+            <img src="{{ asset('assets/smkypc.jpeg')}}" alt="Logo" class="h-15 w-15 rounded object-contain shrink-0">
+        @endif
 
         <div class="hidden [.sidebar-expanded_&]:block leading-tight">
-            <p class="text-lg font-semibold text-white">SMK YPC</p>
+            <p class="text-lg font-semibold text-white">{{ $profil->nama_sekolah }}</p>
             <p class="text-sm text-[#B4B8D8]">Tasikmalaya</p>
         </div>
     </div>
