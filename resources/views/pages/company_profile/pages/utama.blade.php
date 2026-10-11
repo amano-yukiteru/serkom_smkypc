@@ -2,7 +2,6 @@
 
 @section('content')
 
-<<<<<<< HEAD
     <section class="relative flex h-[720px] items-center overflow-hidden bg-blue-950 pb-32 pt-32 text-white">
         <img src="{{ $profil?->foto_sekolah ? asset('storage/' . $profil->foto_sekolah) : asset('assets/smkypc.jpeg') }}"
             alt="{{ $profil?->nama_sekolah ?? 'SMK YPC Tasikmalaya' }}"
@@ -24,29 +23,10 @@
             <a href="#tentang"
                 class="mt-9 inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg transition hover:bg-sky-50">
                 Tentang {{ $profil?->nama_sekolah ?? 'SMK YPC Tasikmalaya' }}
-=======
-    {{-- HERO --}}
-    <section class="relative flex h-[720px] items-center justify-center overflow-hidden bg-blue-950 pb-32 pt-32 text-center text-white">
-        <img src="{{ asset('storage/' . $profil->foto_sekolah) }}" alt="{{ asset('assets/smkypc.jpeg') }}" class="absolute inset-0 h-full w-full object-cover">
-        <div class="absolute inset-0 bg-blue-950/70"></div>
-
-        <div class="relative mx-auto w-full max-w-3xl px-4" data-aos="fade-up" data-aos-duration="900">
-            <p class="font-medium text-sky-200">Yayasan Pesantren Cintawana</p>
-            <h1 class="mt-4 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
-                {{ $profil?->nama_sekolah ?? 'SMK YPC Tasikmalaya' }}
-            </h1>
-            <p class="mx-auto mt-5 max-w-lg text-lg text-sky-100">Mencetak generasi siap kerja dan berakhlak mulia.</p>
-            <a href="#tentang" class="mt-9 inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg transition hover:bg-sky-50">
-                Tentang {{ $profil->nama_sekolah }}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
             </a>
         </div>
     </section>
 
-<<<<<<< HEAD
-=======
-    {{-- STATISTIK --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     <section class="bg-sky-50 py-14">
         <div class="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-4 md:gap-6 lg:grid-cols-4">
             <div class="flex flex-col items-center justify-between rounded-2xl bg-white px-6 py-10 text-center shadow-xl shadow-gray-300 transition hover:shadow-blue-100" data-aos="fade-up">
@@ -68,10 +48,6 @@
         </div>
     </section>
 
-<<<<<<< HEAD
-=======
-    {{-- SAMBUTAN --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($profil)
         <section id="tentang" class="scroll-mt-20 py-10 md:py-14">
             <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-5 md:gap-16">
@@ -101,10 +77,6 @@
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- VISI & MISI --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($profil && ($profil->visi || $profil->misi))
         <section id="visi-misi" class="scroll-mt-20 bg-sky-50 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
@@ -130,10 +102,6 @@
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- BERITA --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($beritaTerbaru->isNotEmpty())
         <section id="berita" class="scroll-mt-20 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
@@ -165,10 +133,6 @@
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- JURUSAN --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
 
     @if($jurusans->isNotEmpty())
         <section id="jurusan" class="scroll-mt-20 bg-sky-50 py-10 md:py-14">
@@ -179,12 +143,8 @@
 
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach($jurusans as $item)
-<<<<<<< HEAD
                         <a href="{{ route('publik.jurusan.detail', $item->id) }}"
                             class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
-=======
-                        <div class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                             data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
 
                             <div class="relative aspect-video overflow-hidden bg-sky-100">
@@ -209,21 +169,13 @@
                                     {{ Str::limit(strip_tags($item->deskripsi), 100) }}
                                 </p> --}}
                             </div>
-<<<<<<< HEAD
                         </a>
-=======
-                        </div>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     @endforeach
                 </div>
             </div>
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- KERJASAMA --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($kerjasamas->isNotEmpty())
         <section id="kerjasama" class="scroll-mt-20 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
@@ -231,21 +183,12 @@
                     <h2 class="text-3xl font-bold tracking-tight text-blue-950 md:text-4xl">Kerjasama</h2>
                     <p class="mx-auto mt-3 max-w-2xl text-slate-600">Kami bekerja sama dengan berbagai perusahaan dan institusi terpercaya.</p>
                 </div>
-<<<<<<< HEAD
 
                 <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                     @foreach($kerjasamas as $item)
                         <div class="flex items-center justify-center" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 5) * 100 }}">
                             @if($item->foto && Storage::disk('public')->exists($item->foto))
                                 <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_perusahaan }}" class="h-full w-full object-contain mx-auto">
-=======
-                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                    @foreach($kerjasamas as $item)
-                        <div class="flex h-28 items-center justify-center rounded-xl border border-slate-100 bg-white p-4 shadow-md transition hover:shadow-lg"
-                            data-aos="fade-up" data-aos-delay="{{ ($loop->index % 5) * 100 }}">
-                            @if($item->foto && Storage::disk('public')->exists($item->foto))
-                                <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_perusahaan }}" class="h-full w-full object-contain">
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                             @else
                                 <p class="text-center text-sm font-semibold text-slate-500">{{ $item->nama_perusahaan }}</p>
                             @endif
@@ -256,10 +199,6 @@
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- EKSTRAKURIKULER --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($ekstrakurikuler->isNotEmpty())
         <section id="ekstrakurikuler" class="scroll-mt-20 bg-sky-50 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
@@ -268,7 +207,6 @@
                 </div>
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach($ekstrakurikuler as $item)
-<<<<<<< HEAD
                         <a href="{{ route('publik.ekstrakurikuler.detail', $item->id) }}"
                             class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                             data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
@@ -294,27 +232,12 @@
                                 <p class="text-sm text-slate-600">Jadwal: {{ $item->jadwal_latihan }}</p>
                             </div>
                         </a>
-=======
-                        <div class="rounded-xl border border-slate-100 bg-white p-6 shadow-md transition hover:shadow-lg"
-                            data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-900 text-sm font-bold text-white">
-                                {{ strtoupper(substr($item->nama_eskul, 0, 2)) }}
-                            </div>
-                            <h3 class="mt-4 text-lg font-bold text-blue-950">{{ $item->nama_eskul }}</h3>
-                            <p class="mt-2 text-sm text-slate-600">Pembina: {{ $item->pembina }}</p>
-                            <p class="text-sm text-slate-600">Jadwal: {{ $item->jadwal_latihan }}</p>
-                        </div>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     @endforeach
                 </div>
             </div>
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- GALERI --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($galeris->isNotEmpty())
         <section id="galeri" class="scroll-mt-20 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
@@ -331,47 +254,27 @@
 
                         @if($item->file && Storage::disk('public')->exists($item->file))
                             @if($isVideo)
-<<<<<<< HEAD
-=======
-                                {{-- VIDEO: klik untuk buka di tab baru --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                                 <a href="{{ $fileUrl }}" target="_blank" rel="noopener noreferrer"
                                     class="group relative aspect-square overflow-hidden rounded-lg bg-sky-100 shadow-md block"
                                     data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
                                     <video src="{{ $fileUrl }}" class="h-full w-full object-cover" muted preload="metadata"></video>
 
-<<<<<<< HEAD
-=======
-                                    {{-- Overlay tombol play --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                                     <div class="absolute inset-0 flex items-center justify-center bg-blue-950/40 transition group-hover:bg-blue-950/60">
                                         <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white pl-1 text-xl text-blue-900 shadow-lg">&#9654;</span>
                                     </div>
 
-<<<<<<< HEAD
-=======
-                                    {{-- Judul di bawah --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                                     <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-blue-950/90 to-transparent p-3">
                                         <p class="line-clamp-1 text-xs font-semibold text-white">{{ $item->judul }}</p>
                                     </div>
                                 </a>
                             @else
-<<<<<<< HEAD
-=======
-                                {{-- FOTO: klik untuk buka full di tab baru --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                                 <a href="{{ $fileUrl }}" target="_blank" rel="noopener noreferrer"
                                     class="group relative aspect-square overflow-hidden rounded-lg bg-sky-100 shadow-md block"
                                     data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
                                     <img src="{{ $fileUrl }}" alt="{{ $item->judul }}"
                                         class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
 
-<<<<<<< HEAD
 
-=======
-                                    {{-- Judul di bawah --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                                     <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-blue-950/90 to-transparent p-3 opacity-0 transition group-hover:opacity-100">
                                         <p class="line-clamp-1 text-xs font-semibold text-white">{{ $item->judul }}</p>
                                     </div>
@@ -384,10 +287,6 @@
         </section>
     @endif
 
-<<<<<<< HEAD
-=======
-    {{-- GURU --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     @if($gurus->isNotEmpty())
         <section id="guru" class="scroll-mt-20 bg-sky-50 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
@@ -396,7 +295,6 @@
                 </div>
                 <div class="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
                     @foreach($gurus as $item)
-<<<<<<< HEAD
                         <div class="overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                             data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
 
@@ -421,20 +319,6 @@
                                 <h3 class="line-clamp-2 text-base font-bold text-blue-950">{{ $item->nama_guru }}</h3>
                                 {{-- <p class="mt-1 text-xs text-slate-500">NIP: {{ $item->nip }}</p> --}}
                             </div>
-=======
-                        <div data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
-                            <div class="aspect-[3/4] overflow-hidden rounded-xl bg-sky-100 shadow-md">
-                                @if($item->foto && Storage::disk('public')->exists($item->foto))
-                                    <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_guru }}" class="h-full w-full object-cover">
-                                @else
-                                    <div class="flex h-full items-center justify-center text-5xl font-bold text-sky-300">
-                                        {{ strtoupper(substr($item->nama_guru, 0, 1)) }}
-                                    </div>
-                                @endif
-                            </div>
-                            <h3 class="mt-4 line-clamp-2 text-center text-base font-bold text-blue-950">{{ $item->nama_guru }}</h3>
-                            <p class="mt-1 text-center text-sm text-slate-500">{{ $item->mapel }}</p>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                         </div>
                     @endforeach
                 </div>

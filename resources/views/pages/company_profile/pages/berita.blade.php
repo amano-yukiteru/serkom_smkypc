@@ -10,18 +10,10 @@
     @else
         <div class="mx-auto grid max-w-6xl gap-6 px-4 pt-28 pb-10 sm:grid-cols-2 lg:grid-cols-3">
             @foreach($berita as $item)
-<<<<<<< HEAD
                 <a href="{{ route('publik.berita.detail', ['encryptedId' => Crypt::encrypt($item->id)]) }}"
                     class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                     data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
 
-=======
-                <a href="{{ route('publik.berita.detail', $item->id) }}"
-                    class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
-                    data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
-
-                    {{-- GAMBAR --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     <div class="relative aspect-video overflow-hidden bg-sky-100">
                         @if($item->gambar && Storage::disk('public')->exists($item->gambar))
                             <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}"
@@ -32,19 +24,11 @@
                             </div>
                         @endif
 
-<<<<<<< HEAD
-=======
-                        {{-- BADGE TANGGAL DI KIRI ATAS --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                         <span class="absolute left-3 top-3 rounded-md bg-blue-900/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
                             {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}
                         </span>
                     </div>
 
-<<<<<<< HEAD
-=======
-                    {{-- KONTEN --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     <div class="p-6">
                         <h3 class="line-clamp-2 text-lg font-bold text-blue-950 group-hover:text-sky-700">
                             {{ $item->judul }}
@@ -52,15 +36,6 @@
                         <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">
                             {{ Str::limit(strip_tags($item->isi), 120) }}
                         </p>
-<<<<<<< HEAD
-=======
-
-                        {{-- META --}}
-                        {{-- <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 text-xs text-slate-500">
-                            <span>{{ $item->user?->name ?? 'Admin' }}</span>
-                            <span class="font-semibold text-blue-900 group-hover:text-sky-600">Baca →</span>
-                        </div> --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     </div>
                 </a>
             @endforeach

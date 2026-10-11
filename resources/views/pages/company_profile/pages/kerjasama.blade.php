@@ -13,10 +13,6 @@
                 <div class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                     data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
 
-<<<<<<< HEAD
-=======
-                    {{-- GAMBAR --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     <div class="relative aspect-video overflow-hidden bg-sky-100">
                         @if($item->foto && Storage::disk('public')->exists($item->foto))
                             <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_perusahaan }}"
@@ -27,19 +23,11 @@
                             </div>
                         @endif
 
-<<<<<<< HEAD
-=======
-                        {{-- BADGE PARTNER DI KIRI ATAS --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                         {{-- <span class="absolute left-3 top-3 rounded-md bg-blue-900/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
                             Partner
                         </span> --}}
                     </div>
 
-<<<<<<< HEAD
-=======
-                    {{-- KONTEN --}}
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                     <div class="p-6">
                         <h3 class="line-clamp-2 text-lg font-bold text-blue-950 group-hover:text-sky-700">
                             {{ $item->nama_perusahaan }}
