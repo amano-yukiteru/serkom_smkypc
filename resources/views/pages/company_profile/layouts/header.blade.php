@@ -21,16 +21,11 @@
             </a>
             <a href="{{ route('publik.jurusan') }}"
                 class="rounded-full px-2.5 py-2 text-sm font-semibold transition hover:text-blue-900
-<<<<<<< HEAD
                     {{ request()->routeIs('publik.jurusan*') ? 'text-blue-900' : 'text-slate-600' }}">
-=======
-                    {{ request()->routeIs('publik.jurusan') ? 'text-blue-900' : 'text-slate-600' }}">
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
                 Jurusan
             </a>
             <a href="{{ route('publik.ekstrakurikuler') }}"
                 class="rounded-full px-2.5 py-2 text-sm font-semibold transition hover:text-blue-900
-<<<<<<< HEAD
                     {{ request()->routeIs('publik.ekstrakurikuler*') ? 'text-blue-900' : 'text-slate-600' }}">
                 Ekstrakurikuler
             </a>
@@ -39,24 +34,11 @@
                     {{ request()->routeIs('publik.berita*') ? 'text-blue-900' : 'text-slate-600' }}">
                 Berita
             </a>
-=======
-                    {{ request()->routeIs('publik.ekstrakurikuler') ? 'text-blue-900' : 'text-slate-600' }}">
-                Ekstrakurikuler
-            </a>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
             <a href="{{ route('publik.galeri') }}"
                 class="rounded-full px-2.5 py-2 text-sm font-semibold transition hover:text-blue-900
                     {{ request()->routeIs('publik.galeri') ? 'text-blue-900' : 'text-slate-600' }}">
                 Galeri
             </a>
-<<<<<<< HEAD
-=======
-            <a href="{{ route('publik.berita') }}"
-                class="rounded-full px-2.5 py-2 text-sm font-semibold transition hover:text-blue-900
-                    {{ request()->routeIs('publik.berita') ? 'text-blue-900' : 'text-slate-600' }}">
-                Berita
-            </a>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
             <a href="{{ route('publik.guru') }}"
                 class="rounded-full px-2.5 py-2 text-sm font-semibold transition hover:text-blue-900
                     {{ request()->routeIs('publik.guru') ? 'text-blue-900' : 'text-slate-600' }}">
@@ -85,16 +67,11 @@
         </a>
         <a href="{{ route('publik.jurusan') }}"
             class="block rounded-xl px-4 py-3 text-sm font-semibold transition hover:bg-sky-50 hover:text-blue-900
-<<<<<<< HEAD
                 {{ request()->routeIs('publik.jurusan*') ? 'text-blue-900' : 'text-slate-600' }}">
-=======
-                {{ request()->routeIs('publik.jurusan') ? 'text-blue-900' : 'text-slate-600' }}">
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
             Jurusan
         </a>
         <a href="{{ route('publik.ekstrakurikuler') }}"
             class="block rounded-xl px-4 py-3 text-sm font-semibold transition hover:bg-sky-50 hover:text-blue-900
-<<<<<<< HEAD
                 {{ request()->routeIs('publik.ekstrakurikuler*') ? 'text-blue-900' : 'text-slate-600' }}">
             Ekstrakurikuler
         </a>
@@ -103,24 +80,11 @@
                 {{ request()->routeIs('publik.berita*') ? 'text-blue-900' : 'text-slate-600' }}">
             Berita
         </a>
-=======
-                {{ request()->routeIs('publik.ekstrakurikuler') ? 'text-blue-900' : 'text-slate-600' }}">
-            Ekstrakurikuler
-        </a>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
         <a href="{{ route('publik.galeri') }}"
             class="block rounded-xl px-4 py-3 text-sm font-semibold transition hover:bg-sky-50 hover:text-blue-900
                 {{ request()->routeIs('publik.galeri') ? 'text-blue-900' : 'text-slate-600' }}">
             Galeri
         </a>
-<<<<<<< HEAD
-=======
-        <a href="{{ route('publik.berita') }}"
-            class="block rounded-xl px-4 py-3 text-sm font-semibold transition hover:bg-sky-50 hover:text-blue-900
-                {{ request()->routeIs('publik.berita') ? 'text-blue-900' : 'text-slate-600' }}">
-            Berita
-        </a>
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
         <a href="{{ route('publik.guru') }}"
             class="block rounded-xl px-4 py-3 text-sm font-semibold transition hover:bg-sky-50 hover:text-blue-900
                 {{ request()->routeIs('publik.guru') ? 'text-blue-900' : 'text-slate-600' }}">

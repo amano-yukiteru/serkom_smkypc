@@ -19,19 +19,12 @@ use App\Http\Controllers\UserController;
 Route::get('/', [CompanyProfil::class, 'index'])->name('home');
 
 Route::prefix('publik')->name('publik.')->group(function () {
-<<<<<<< HEAD
     Route::get('/berita',      [CompanyProfil::class, 'berita'])->name('berita');
     Route::get('/berita/{encryptedId}',     [CompanyProfil::class, 'beritaDetail'])->name('berita.detail');
     Route::get('/jurusan',  [CompanyProfil::class, 'jurusan'])->name('jurusan');
     Route::get('/jurusan/{encryptedId}',    [CompanyProfil::class, 'jurusanDetail'])->name('jurusan.detail');
     Route::get('/ekstrakurikuler', [CompanyProfil::class, 'ekstrakurikuler'])->name('ekstrakurikuler');
     Route::get('/ekstrakurikuler/{encryptedId}',   [CompanyProfil::class, 'ekstrakurikulerDetail'])->name('ekstrakurikuler.detail');
-=======
-    Route::get('/berita',          [CompanyProfil::class, 'berita'])->name('berita');
-    Route::get('/berita/{id}',     [CompanyProfil::class, 'beritaDetail'])->name('berita.detail');
-    Route::get('/jurusan',         [CompanyProfil::class, 'jurusan'])->name('jurusan');
-    Route::get('/ekstrakurikuler', [CompanyProfil::class, 'ekstrakurikuler'])->name('ekstrakurikuler');
->>>>>>> 0d8e2e83532fdae944a4bb9c32d1f62477840235
     Route::get('/galeri',          [CompanyProfil::class, 'galeri'])->name('galeri');
     Route::get('/guru',            [CompanyProfil::class, 'guru'])->name('guru');
     Route::get('/kerjasama',       [CompanyProfil::class, 'kerjasama'])->name('kerjasama');
