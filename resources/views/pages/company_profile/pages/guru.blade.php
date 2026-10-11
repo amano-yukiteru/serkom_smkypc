@@ -20,11 +20,10 @@
                                 class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                         @else
                             <div class="flex h-full items-center justify-center text-6xl font-bold text-sky-300">
-                                {{ strtoupper(substr($item->nama_guru, 0, 1)) }}
+                                {{ strtoupper(substr($item->nama_guru, 0, 1,)) }}
                             </div>
                         @endif
 
-                        {{-- BADGE MAPEL DI KIRI ATAS --}}
                         @if($item->mapel)
                             <span class="absolute left-3 top-3 rounded-md bg-blue-900/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
                                 {{ $item->mapel }}
@@ -32,7 +31,6 @@
                         @endif
                     </div>
 
-                    {{-- KONTEN --}}
                     <div class="p-5 text-center">
                         <h3 class="line-clamp-2 text-base font-bold text-blue-950">{{ $item->nama_guru }}</h3>
                         {{-- <p class="mt-1 text-xs text-slate-500">NIP: {{ $item->nip }}</p> --}}

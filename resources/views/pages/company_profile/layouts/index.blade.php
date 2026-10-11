@@ -19,6 +19,7 @@
 <body class="bg-white text-slate-800 antialiased">
 
     @include('pages.company_profile.layouts.header')
+    <x-ui.breadcrumb/>
 
     @yield('content')
 

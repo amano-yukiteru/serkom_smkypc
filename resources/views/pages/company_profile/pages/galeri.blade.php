@@ -17,7 +17,6 @@
 
                 @if($item->file && Storage::disk('public')->exists($item->file))
                     @if($isVideo)
-                        {{-- VIDEO CARD --}}
                         <a href="{{ $fileUrl }}" target="_blank" rel="noopener noreferrer"
                             class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                             data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
@@ -25,12 +24,10 @@
                             <div class="relative aspect-video overflow-hidden bg-sky-100">
                                 <video src="{{ $fileUrl }}" class="h-full w-full object-cover" muted preload="metadata"></video>
 
-                                {{-- Overlay tombol play --}}
                                 <div class="absolute inset-0 flex items-center justify-center bg-blue-950/40 transition group-hover:bg-blue-950/60">
                                     <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white pl-1 text-xl text-blue-900 shadow-lg">&#9654;</span>
                                 </div>
 
-                                {{-- Badge VIDEO di kiri atas --}}
                                 <span class="absolute left-3 top-3 rounded-md bg-blue-900/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
                                     Video
                                 </span>
@@ -44,7 +41,6 @@
                             </div>
                         </a>
                     @else
-                        {{-- FOTO CARD --}}
                         <a href="{{ $fileUrl }}" target="_blank" rel="noopener noreferrer"
                             class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                             data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">

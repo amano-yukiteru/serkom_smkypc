@@ -10,6 +10,7 @@ use App\Models\Jurusan;
 use App\Models\Kerjasama;
 use App\Models\ProfilSekolah;
 use App\Models\Siswa;
+use Illuminate\Support\Facades\Crypt;
 
 class CompanyProfil extends Controller
 {
@@ -47,28 +48,18 @@ class CompanyProfil extends Controller
     }
 
 
-    // ============================================================
-    // HALAMAN PUBLIK
-    // ============================================================
     public function berita()
     {
-        return view('pages.company_profile.pages.berita', [   // ⬅️ FIX
+        return view('pages.company_profile.pages.berita', [ 
             'profil' => ProfilSekolah::first(),
             'berita' => Berita::with('user:id,name')->latest('tanggal')->paginate(9),
         ]);
     }
 
-    // public function beritaDetail($id)
-    // {
-    //     return view('pages.company_profile.pages.berita-detail', [   // ⬅️ FIX
-    //         'profil' => ProfilSekolah::first(),
-    //         'berita' => Berita::with('user:id,name')->findOrFail($id),
-    //     ]);
-    // }
-
+    
     public function jurusan()
     {
-        return view('pages.company_profile.pages.jurusan', [   // ⬅️ FIX
+        return view('pages.company_profile.pages.jurusan', [  
             'profil'   => ProfilSekolah::first(),
             'jurusans' => Jurusan::latest('id')->paginate(12),
         ]);
@@ -76,7 +67,7 @@ class CompanyProfil extends Controller
 
     public function ekstrakurikuler()
     {
-        return view('pages.company_profile.pages.ekstrakurikuler', [   // ⬅️ FIX
+        return view('pages.company_profile.pages.ekstrakurikuler', [ 
             'profil'          => ProfilSekolah::first(),
             'ekstrakurikuler' => Ekstrakurikuler::latest('id')->paginate(12),
         ]);
@@ -84,7 +75,7 @@ class CompanyProfil extends Controller
 
     public function galeri()
     {
-        return view('pages.company_profile.pages.galeri', [   // ⬅️ FIX
+        return view('pages.company_profile.pages.galeri', [
             'profil'  => ProfilSekolah::first(),
             'galeris' => Galeri::latest('id')->paginate(16),
         ]);
@@ -92,7 +83,7 @@ class CompanyProfil extends Controller
 
     public function guru()
     {
-        return view('pages.company_profile.pages.guru', [   // ⬅️ FIX
+        return view('pages.company_profile.pages.guru', [
             'profil' => ProfilSekolah::first(),
             'gurus'  => Guru::latest('id')->paginate(20),
         ]);
@@ -100,9 +91,61 @@ class CompanyProfil extends Controller
 
     public function kerjasama()
     {
-        return view('pages.company_profile.pages.kerjasama', [   // ⬅️ FIX
+        return view('pages.company_profile.pages.kerjasama', [
             'profil'     => ProfilSekolah::first(),
             'kerjasamas' => Kerjasama::latest('id')->paginate(20),
         ]);
     }
+
+
+    public function beritaDetail(string $encryptedId)
+    {
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $berita = Berita::with('user:id,name')->findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('publik.berita')
+                ->with('error', 'Data tidak ditemukan.');
+        }
+
+        return view('pages.company_profile.pages.detail.berita', [
+            'profil' => ProfilSekolah::first(),
+            'berita' => $berita,
+        ]);
+    }
+
+
+    public function jurusanDetail(string $encryptedId)
+    {
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $jurusan = Jurusan::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('publik.jurusan')
+                ->with('error', 'Data tidak ditemukan.');
+        }
+
+        return view('pages.company_profile.pages.detail.jurusan', [
+            'profil'  => ProfilSekolah::first(),
+            'jurusan' => $jurusan,
+        ]);
+    }
+
+
+    public function ekstrakurikulerDetail(string $encryptedId)
+    {
+        try {
+            $id = Crypt::decrypt($encryptedId);
+            $ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+        } catch (\Throwable $e) {
+            return redirect()->route('publik.ekstrakurikuler')
+                ->with('error', 'Data tidak ditemukan.');
+        }
+
+        return view('pages.company_profile.pages.detail.ekstrakurikuler', [
+            'profil'          => ProfilSekolah::first(),
+            'ekstrakurikuler' => $ekstrakurikuler,
+        ]);
+    }
+
 }
