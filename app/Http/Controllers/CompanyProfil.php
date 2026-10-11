@@ -6,99 +6,103 @@ use App\Models\Berita;
 use App\Models\Ekstrakurikuler;
 use App\Models\Galeri;
 use App\Models\Guru;
+use App\Models\Jurusan;
+use App\Models\Kerjasama;
 use App\Models\ProfilSekolah;
 use App\Models\Siswa;
-use Illuminate\Support\Facades\Storage;
 
 class CompanyProfil extends Controller
 {
     public function index()
     {
-        // Profil sekolah (single record)
         $profil = ProfilSekolah::first();
 
-        // Statistik
-        $totalSiswa = Siswa::count();
-        $totalGuru  = Guru::count();
-        $totalEskul = Ekstrakurikuler::count();
+        $totalSiswa   = Siswa::count();
+        $totalGuru    = Guru::count();
+        $totaljurusan = Jurusan::count();
 
-        // Berita terbaru (3 item)
         $beritaTerbaru = Berita::query()
             ->with('user:id,name')
             ->orderBy('tanggal', 'desc')
-            ->limit(3)
-            ->get();
-
-        // Ekstrakurikuler (4 item)
-        $ekstrakurikuler = Ekstrakurikuler::query()
-            ->latest('id')
             ->limit(4)
             ->get();
 
-        // Galeri (8 item)
-        $galeris = Galeri::query()
-            ->latest('id')
-            ->limit(8)
-            ->get();
+        $ekstrakurikuler = Ekstrakurikuler::query()->latest('id')->limit(4)->get();
+        $galeris         = Galeri::query()->latest('id')->limit(8)->get();
+        $gurus           = Guru::query()->latest('id')->limit(4)->get();
+        $jurusans        = Jurusan::query()->latest('id')->get();
+        $kerjasamas      = Kerjasama::query()->latest('id')->get();
 
-        // Guru (5 item)
-        $gurus = Guru::query()
-            ->latest('id')
-            ->limit(5)
-            ->get();
-
-        return view('pages.company_profile.index', compact(
-            'profil',
+        return view('pages.company_profile.pages.utama', compact(
             'totalSiswa',
             'totalGuru',
-            'totalEskul',
+            'totaljurusan',
             'beritaTerbaru',
             'ekstrakurikuler',
             'galeris',
             'gurus',
+            'jurusans',
+            'kerjasamas',
         ));
     }
 
-    // /**
-    //  * ============================================
-    //  * DASHBOARD ADMIN
-    //  * URL: /dashboard
-    //  * ============================================
-    //  */
-    public function admin()
+
+    // ============================================================
+    // HALAMAN PUBLIK
+    // ============================================================
+    public function berita()
     {
-        // Statistik
-        $totalSiswa  = Siswa::count();
-        $totalGuru   = Guru::count();
-        $totalBerita = Berita::count();
-        $totalGaleri = Galeri::count();
-        $totalEskul  = Ekstrakurikuler::count();
+        return view('pages.company_profile.pages.berita', [   // ⬅️ FIX
+            'profil' => ProfilSekolah::first(),
+            'berita' => Berita::with('user:id,name')->latest('tanggal')->paginate(9),
+        ]);
+    }
 
-        // Berita terbaru (3 item)
-        $beritaTerbaru = Berita::query()
-            ->with('user:id,name')
-            ->orderBy('tanggal', 'desc')
-            ->limit(3)
-            ->get();
+    // public function beritaDetail($id)
+    // {
+    //     return view('pages.company_profile.pages.berita-detail', [   // ⬅️ FIX
+    //         'profil' => ProfilSekolah::first(),
+    //         'berita' => Berita::with('user:id,name')->findOrFail($id),
+    //     ]);
+    // }
 
-        // Ekstrakurikuler (3 item terbaru)
-        $ekstrakurikuler = Ekstrakurikuler::query()
-            ->latest('id')
-            ->limit(3)
-            ->get();
+    public function jurusan()
+    {
+        return view('pages.company_profile.pages.jurusan', [   // ⬅️ FIX
+            'profil'   => ProfilSekolah::first(),
+            'jurusans' => Jurusan::latest('id')->paginate(12),
+        ]);
+    }
 
-        // Profil sekolah
-        $profil = ProfilSekolah::first();
+    public function ekstrakurikuler()
+    {
+        return view('pages.company_profile.pages.ekstrakurikuler', [   // ⬅️ FIX
+            'profil'          => ProfilSekolah::first(),
+            'ekstrakurikuler' => Ekstrakurikuler::latest('id')->paginate(12),
+        ]);
+    }
 
-        return view('pages.dashboard.index', compact(
-            'totalSiswa',
-            'totalGuru',
-            'totalBerita',
-            'totalGaleri',
-            'totalEskul',
-            'beritaTerbaru',
-            'ekstrakurikuler',
-            'profil',
-        ));
+    public function galeri()
+    {
+        return view('pages.company_profile.pages.galeri', [   // ⬅️ FIX
+            'profil'  => ProfilSekolah::first(),
+            'galeris' => Galeri::latest('id')->paginate(16),
+        ]);
+    }
+
+    public function guru()
+    {
+        return view('pages.company_profile.pages.guru', [   // ⬅️ FIX
+            'profil' => ProfilSekolah::first(),
+            'gurus'  => Guru::latest('id')->paginate(20),
+        ]);
+    }
+
+    public function kerjasama()
+    {
+        return view('pages.company_profile.pages.kerjasama', [   // ⬅️ FIX
+            'profil'     => ProfilSekolah::first(),
+            'kerjasamas' => Kerjasama::latest('id')->paginate(20),
+        ]);
     }
 }

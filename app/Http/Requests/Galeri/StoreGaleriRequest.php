@@ -24,7 +24,7 @@ class StoreGaleriRequest extends FormRequest
         return [
             'judul'      => 'required|string|max:50',
             'keterangan' => 'required|string',
-            'file'       => 'required|file|mimes:jpg,jpeg,png,webp,mp4,webm,mov|max:10240',
+            'file'       => 'required|file|mimes:jpg,jpeg,png,webp,mp4,webm,mov|max:100240',
         ];
     }
 }
