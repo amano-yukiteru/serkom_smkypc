@@ -23,7 +23,7 @@ class UpdateGaleriRequest extends FormRequest
         return [
             'judul'      => 'required|string|max:50',
             'keterangan' => 'required|string',
-            'file'       => 'nullable|file|mimes:jpg,jpeg,png,webp,mp4,webm,mov|max:10240',
+            'file'       => 'nullable|file|mimes:jpg,jpeg,png,webp,mp4,webm,mov|max:100240',
         ];
     }
 }
