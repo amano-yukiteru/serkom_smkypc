@@ -20,9 +20,9 @@
                 {{ $profil?->nama_sekolah ?? 'SMK YPC Tasikmalaya' }} — Mencetak generasi siap kerja dan berakhlak mulia.
             </p>
 
-            <a href="#tentang"
+            <a href="#visimisi"
                 class="mt-9 inline-block rounded-full bg-white px-8 py-3 text-sm font-semibold text-blue-900 shadow-lg transition hover:bg-sky-50">
-                Tentang {{ $profil?->nama_sekolah ?? 'SMK YPC Tasikmalaya' }}
+                Visi & Misi {{ $profil?->nama_sekolah ?? 'SMK YPC Tasikmalaya' }}
             </a>
         </div>
     </section>
@@ -78,7 +78,7 @@
     @endif
 
     @if($profil && ($profil->visi || $profil->misi))
-        <section id="visi-misi" class="scroll-mt-20 bg-sky-50 py-10 md:py-14">
+        <section id="visimisi" class="scroll-mt-20 bg-sky-50 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
                 <div class="mb-10 text-center" data-aos="fade-up">
                     <h2 class="text-3xl font-bold tracking-tight text-blue-950 md:text-4xl">Visi &amp; Misi</h2>
@@ -143,7 +143,7 @@
 
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach($jurusans as $item)
-                        <a href="{{ route('publik.jurusan.detail', $item->id) }}"
+                        <a href="{{ route('publik.jurusan.detail', Crypt::encrypt($item->id)) }}"
                             class="group overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md transition hover:shadow-lg"
                             data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
 
@@ -176,7 +176,7 @@
         </section>
     @endif
 
-    @if($kerjasamas->isNotEmpty())
+   @if($kerjasamas->isNotEmpty())
         <section id="kerjasama" class="scroll-mt-20 py-10 md:py-14">
             <div class="mx-auto max-w-6xl px-4">
                 <div class="mb-10 text-center" data-aos="fade-up">
@@ -186,11 +186,16 @@
 
                 <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                     @foreach($kerjasamas as $item)
-                        <div class="flex items-center justify-center" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 5) * 100 }}">
+                        <div class="flex h-24 items-center justify-center rounded-lg md:h-28"
+                            data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 5) * 100 }}">
                             @if($item->foto && Storage::disk('public')->exists($item->foto))
-                                <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->nama_perusahaan }}" class="h-full w-full object-contain mx-auto">
+                                <img src="{{ asset('storage/' . $item->foto) }}"
+                                    alt="{{ $item->nama_perusahaan }}"
+                                    class="mx-auto max-h-full max-w-full object-contain">
                             @else
-                                <p class="text-center text-sm font-semibold text-slate-500">{{ $item->nama_perusahaan }}</p>
+                                <p class="text-center text-sm font-semibold text-slate-500">
+                                    {{ $item->nama_perusahaan }}
+                                </p>
                             @endif
                         </div>
                     @endforeach

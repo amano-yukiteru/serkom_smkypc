@@ -55,7 +55,7 @@
         </div>
 
         <div class="border-t border-white/10 py-5 text-center text-xs text-sky-300">
-            &copy; {{ date('Y') }} {{ $profil?->nama_sekolah ?? 'SMK YPC' }}. All rights reserved.
+            &copy; {{ date('Y') }} {{ $profil?->nama_sekolah ?? 'SMK YPC' }}. 
         </div>
     </footer>
 

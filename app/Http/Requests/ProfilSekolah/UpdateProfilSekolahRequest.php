@@ -16,7 +16,7 @@ class UpdateProfilSekolahRequest extends FormRequest
         return [
             'nama_sekolah'   => 'required|string|max:40',
             'kepala_sekolah' => 'required|string|max:40',
-            'npsn'           => 'required|digits:10',
+            'npsn'           => 'required|digits:8',
             'kontak'         => 'required|string|max:15',
             'tahun_berdiri'  => 'required|digits:4|integer|min:1900|max:' . date('Y'),
 

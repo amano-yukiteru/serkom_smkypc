@@ -53,10 +53,10 @@ class MenuHelper
                 'roles' => ['Admin', 'Oprator'],
             ],
             [
-                'icon' => 'partnership',        // ⬅️ BARU
-                'name' => 'Kerjasama',          // ⬅️ BARU
-                'path' => '/kerjasama',         // ⬅️ BARU
-                'roles' => ['Admin', 'Oprator'],// ⬅️ BARU
+                'icon' => 'partnership',        
+                'name' => 'Kerjasama',          
+                'path' => '/kerjasama',         
+                'roles' => ['Admin', 'Oprator'],
             ],
             [
                 'icon' => 'school',

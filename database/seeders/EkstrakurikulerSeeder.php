@@ -2,36 +2,87 @@
 
 namespace Database\Seeders;
 
-use App\Models\Ekstrakurikuler;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EkstrakurikulerSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $eskul = [
-            ['nama' => 'Pramuka',         'pembina' => 'Dedi Mulyadi',    'jadwal' => 'Jumat, 14:00 - 16:00',    'deskripsi' => 'Ekstrakurikuler wajib untuk melatih kedisiplinan dan kemandirian siswa.'],
-            ['nama' => 'Paskibra',        'pembina' => 'Bambang Sutrisno', 'jadwal' => 'Sabtu, 08:00 - 10:00',    'deskripsi' => 'Latihan baris-berbaris untuk pengibaran bendera dan lomba.'],
-            ['nama' => 'Basket',          'pembina' => 'Agus Setiawan',   'jadwal' => 'Rabu, 15:00 - 17:00',     'deskripsi' => 'Latihan basket rutin untuk persiapan turnamen antar sekolah.'],
-            ['nama' => 'Futsal',          'pembina' => 'Rudi Hartono',    'jadwal' => 'Selasa, 15:00 - 17:00',   'deskripsi' => 'Ekstrakurikuler futsal untuk mengasah skill dan kerja sama tim.'],
-            ['nama' => 'English Club',    'pembina' => 'Sri Wahyuni',     'jadwal' => 'Kamis, 14:00 - 15:30',    'deskripsi' => 'Melatih kemampuan berbahasa Inggris melalui percakapan dan debat.'],
-            ['nama' => 'Rohis',           'pembina' => 'Siti Nurhaliza',  'jadwal' => 'Jumat, 13:00 - 14:30',    'deskripsi' => 'Kegiatan keagamaan untuk meningkatkan keimanan dan ketakwaan siswa.'],
-            ['nama' => 'PMR',             'pembina' => 'Maya Sari',       'jadwal' => 'Sabtu, 09:00 - 11:00',    'deskripsi' => 'Palang Merah Remaja untuk pelatihan pertolongan pertama dan donor darah.'],
-            ['nama' => 'Seni Tari',       'pembina' => 'Dewi Lestari',    'jadwal' => 'Kamis, 15:00 - 17:00',    'deskripsi' => 'Melestarikan seni tari tradisional dan modern untuk pentas sekolah.'],
-            ['nama' => 'Paduan Suara',    'pembina' => 'Yuni Kartika',    'jadwal' => 'Selasa, 14:00 - 15:30',   'deskripsi' => 'Latihan vokal untuk mengisi acara resmi sekolah.'],
-            ['nama' => 'Multimedia',      'pembina' => 'Wahyu Pratama',   'jadwal' => 'Rabu, 14:00 - 16:00',     'deskripsi' => 'Belajar fotografi, videografi, dan editing untuk dokumentasi sekolah.'],
+        $ekstrakurikulers = [
+            [
+                'nama_eskul'      => 'Paskibra',
+                'pembina'         => 'Bpk. Ahmad Fauzi, S.Pd.',
+                'jadwal_latihan'  => 'Sabtu',
+                'deskripsi'       => 'Pasukan Pengibar Bendera yang melatih kedisiplinan, kepemimpinan, dan jiwa nasionalisme siswa.',
+                'foto'            => 'eskul/paskibra.jpg',
+            ],
+            [
+                'nama_eskul'      => 'Pramuka',
+                'pembina'         => 'Ibu Siti Nurjanah, S.Pd.',
+                'jadwal_latihan'  => 'Jumat',
+                'deskripsi'       => 'Kegiatan kepramukaan yang membentuk karakter, kemandirian, dan keterampilan hidup siswa.',
+                'foto'            => 'eskul/pramuka.jpg',
+            ],
+            [
+                'nama_eskul'      => 'Seni Musik',
+                'pembina'         => 'Bpk. Dedi Supriadi, S.Sn.',
+                'jadwal_latihan'  => 'Kamis',
+                'deskripsi'       => 'Ekstrakurikuler musik yang mempelajari alat musik modern, termasuk gitar elektrik dan teori pentatonik.',
+                'foto'            => 'eskul/seni-musik.jpg',
+            ],
+            [
+                'nama_eskul'      => 'Futsal',
+                'pembina'         => 'Bpk. Rizki Ramdani, S.Pd.',
+                'jadwal_latihan'  => 'Rabu',
+                'deskripsi'       => 'Ekstrakurikuler olahraga futsal untuk mengembangkan bakat, kebugaran, dan kerja sama tim.',
+                'foto'            => 'eskul/futsal.jpg',
+            ],
+            [
+                'nama_eskul'      => 'Basket',
+                'pembina'         => 'Bpk. Hendra Gunawan, S.Pd.',
+                'jadwal_latihan'  => 'Selasa',
+                'deskripsi'       => 'Ekstrakurikuler bola basket yang melatih teknik dasar, strategi permainan, dan sportivitas.',
+                'foto'            => 'eskul/basket.jpg',
+            ],
+            [
+                'nama_eskul'      => 'Rohis',
+                'pembina'         => 'Ust. Abdul Rahman, S.Ag.',
+                'jadwal_latihan'  => 'Senin',
+                'deskripsi'       => 'Rohani Islam yang membina keimanan, akhlakul karimah, dan keterampilan dakwah digital siswa.',
+                'foto'            => 'eskul/rohis.jpg',
+            ],
+            [
+                'nama_eskul'      => 'Palang Merah Remaja',
+                'pembina'         => 'Ibu Rina Marlina, S.Kep.',
+                'jadwal_latihan'  => 'Kamis',
+                'deskripsi'       => 'PMR membekali siswa dengan keterampilan pertolongan pertama, kesehatan, dan kepedulian sosial.',
+                'foto'            => 'eskul/pmr.jpg',
+            ],
+            [
+                'nama_eskul'      => 'English Club',
+                'pembina'         => 'Ibu Dewi Sartika, S.Pd.',
+                'jadwal_latihan'  => 'Jumat',
+                'deskripsi'       => 'Klub bahasa Inggris untuk meningkatkan kemampuan speaking, listening, dan public speaking siswa.',
+                'foto'            => 'eskul/english-club.jpg',
+            ],
         ];
 
-        foreach ($eskul as $e) {
-            Ekstrakurikuler::create([
-                'nama_eskul'     => $e['nama'],
-                'pembina'        => $e['pembina'],
-                'jadwal_latihan' => $e['jadwal'],
-                'deskripsi'      => $e['deskripsi'],
-                'foto'           => 'ekstrakurikuler/foto/default.jpg',
-            ]);
+        foreach ($ekstrakurikulers as $eskul) {
+            DB::table('ekstrakurikulers')->updateOrInsert(
+                ['nama_eskul' => $eskul['nama_eskul']],
+                [
+                    'pembina'        => $eskul['pembina'],
+                    'jadwal_latihan' => $eskul['jadwal_latihan'],
+                    'deskripsi'      => $eskul['deskripsi'],
+                    'foto'           => $eskul['foto'],
+                    'created_at'     => now(),
+                    'updated_at'     => now(),
+                ]
+            );
         }
-
-        $this->command->info('✅ EkstrakurikulerSeeder: ' . count($eskul) . ' data berhasil dibuat.');
     }
 }

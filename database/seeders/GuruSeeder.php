@@ -2,37 +2,60 @@
 
 namespace Database\Seeders;
 
-use App\Models\Guru;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GuruSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $data = [
-            ['Drs. Ahmad Fauzi, M.Pd.',        '197501012005011001', 'Matematika',         'guru/ahmad-fauzi.jpg'],
-            ['Siti Nurhaliza, S.Pd.',          '198203152008012002', 'Bahasa Indonesia',   'guru/siti-nurhaliza.jpg'],
-            ['Budi Santoso, S.Pd., M.Si.',     '197812102006041003', 'Fisika',             'guru/budi-santoso.jpg'],
-            ['Dewi Lestari, S.Si.',            '198506202010012004', 'Biologi',            'guru/dewi-lestari.jpg'],
-            ['Hendra Wijaya, S.Kom.',          '198711252012011005', 'Informatika',        'guru/hendra-wijaya.jpg'],
-            ['Rina Marlina, S.Pd.',            '199001102014012006', 'Bahasa Inggris',     'guru/rina-marlina.jpg'],
-            ['Agus Setiawan, S.Pd.',           '198309182009011007', 'Kimia',              'guru/agus-setiawan.jpg'],
-            ['Maya Sari, S.Pd.',               '199204222015012008', 'Sejarah',            'guru/maya-sari.jpg'],
-            ['Eko Prasetyo, S.Pd., M.Pd.',     '197909052005011009', 'Ekonomi',            'guru/eko-prasetyo.jpg'],
-            ['Fitri Handayani, S.Pd.',         '199107142013012010', 'Geografi',           'guru/fitri-handayani.jpg'],
-            ['Rudi Hartono, S.Pd.',            '198602282010011011', 'Penjaskes',          'guru/rudi-hartono.jpg'],
-            ['Indah Permatasari, S.Ag.',       '199308192016012012', 'Pendidikan Agama',   'guru/indah-permatasari.jpg'],
+        $gurus = [
+            [
+                'nama_guru' => 'Imam Amirulloh, S.T.',
+                'nip'       => '197001012005011001',
+                'mapel'     => 'PPLG',
+                'foto'      => 'guru/imam-amirulloh.jpg',
+            ],
+            [
+                'nama_guru' => 'Rafi Hafizhni Anggia, S.Kom.',
+                'nip'       => '198502022010011002',
+                'mapel'     => 'PPLG',
+                'foto'      => 'guru/rafi-hafizhni.jpg',
+            ],
+            [
+                'nama_guru' => 'Fahmy Taufiq Fahrizal, S.Kom.',
+                'nip'       => '199003032012011003',
+                'mapel'     => 'PPLG',
+                'foto'      => 'guru/fahmy-taufiq.jpg',
+            ],
+            [
+                'nama_guru' => 'Ahmad Zaki Ramdani F., S.Kom.',
+                'nip'       => '199105052013011004',
+                'mapel'     => 'PPLG',
+                'foto'      => 'guru/ahmad-zaki.jpg',
+            ],
+            [
+                'nama_guru' => 'Helmi Ahmad Muharrom, S.Kom.',
+                'nip'       => '199207072014011005',
+                'mapel'     => 'PPLG',
+                'foto'      => 'guru/helmi-ahmad.jpg',
+            ],
         ];
 
-        foreach ($data as [$nama, $nip, $mapel, $foto]) {
-            Guru::create([
-                'nama_guru' => $nama,
-                'nip'       => $nip,
-                'mapel'     => $mapel,
-                'foto'      => $foto,
-            ]);
+        foreach ($gurus as $guru) {
+            DB::table('gurus')->updateOrInsert(
+                ['nip' => $guru['nip']],
+                [
+                    'nama_guru' => $guru['nama_guru'],
+                    'mapel'     => $guru['mapel'],
+                    'foto'      => $guru['foto'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
         }
-
-        $this->command->info('✅ GuruSeeder: ' . count($data) . ' data berhasil dibuat.');
     }
 }

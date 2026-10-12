@@ -36,6 +36,6 @@ class SiswaSeeder extends Seeder
             ]);
         }
 
-        $this->command->info('✅ SiswaSeeder: 20 data berhasil dibuat.');
+        // $this->command->info('✅ SiswaSeeder: 20 data berhasil dibuat.');
     }
 }

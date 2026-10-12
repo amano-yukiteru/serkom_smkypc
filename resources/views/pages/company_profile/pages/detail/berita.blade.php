@@ -36,7 +36,7 @@
         @endif
 
         <div class="mt-8 leading-loose text-slate-700" data-aos="fade-up" data-aos-delay="300">
-            {!! nl2br(e($berita->isi)) !!}
+            {{ $berita->isi) }}
         </div>
 
         <div class="mt-10 border-t border-slate-200 pt-5" data-aos="fade-up">

@@ -49,8 +49,7 @@
                                 <img src="{{ $fileUrl }}" alt="{{ $item->judul }}"
                                     class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
 
-                                {{-- Badge FOTO di kiri atas --}}
-                                <span class="absolute left-3 top-3 rounded-md bg-blue-900/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
+                                    <span class="absolute left-3 top-3 rounded-md bg-blue-900/90 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
                                     Foto
                                 </span>
                             </div>

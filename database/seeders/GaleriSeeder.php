@@ -29,6 +29,6 @@ class GaleriSeeder extends Seeder
             ]);
         }
 
-        $this->command->info('✅ GaleriSeeder: ' . count($galeri) . ' data berhasil dibuat.');
+        // $this->command->info('✅ GaleriSeeder: ' . count($galeri) . ' data berhasil dibuat.');
     }
 }

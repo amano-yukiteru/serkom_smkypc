@@ -51,7 +51,7 @@
             <div class="mt-10" data-aos="fade-up" data-aos-delay="100">
                 <h2 class="text-2xl font-bold text-blue-950">Tentang Ekstrakurikuler</h2>
                 <div class="mt-4 leading-relaxed text-slate-700">
-                    {!! nl2br(e($ekstrakurikuler->deskripsi)) !!}
+                    {{ $ekstrakurikuler->deskripsi }}}
                 </div>
             </div>
         @endif
